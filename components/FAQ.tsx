@@ -51,7 +51,7 @@ const faqs: FAQItem[] = [
   {
     question: '¿En qué plataformas trabajan?',
     answer:
-      'Trabajamos con Google Ads y Meta Ads (Facebook e Instagram). También configuramos Google Analytics 4 como parte del setup de tracking.',
+      'Trabajamos con Google Ads y Meta Ads (Facebook e Instagram).',
   },
   {
     question: '¿Me garantizan resultados?',

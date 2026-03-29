@@ -10,6 +10,8 @@ import Pricing from '@/components/Pricing'
 import HowItWorks from '@/components/HowItWorks'
 import WhoIsItFor from '@/components/WhoIsItFor'
 import Benefits from '@/components/Benefits'
+import Testimonials from '@/components/Testimonials'
+import AboutUs from '@/components/AboutUs'
 import FAQ from '@/components/FAQ'
 import CTAFinal from '@/components/CTAFinal'
 import StickyMobileCTA from '@/components/StickyMobileCTA'
@@ -146,6 +148,8 @@ export default function Home() {
         <HowItWorks />
         <WhoIsItFor />
         <Benefits />
+        <Testimonials />
+        <AboutUs />
         <FAQ />
         <CTAFinal />
       </main>
