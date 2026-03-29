@@ -12,7 +12,9 @@ export type Cotizacion = {
   email_cliente: string
   telefono_cliente: string
   servicios: string[]
-  descuento: number
+  descuento?: number
+  descuento_unico?: number
+  descuento_mensual?: number
   mensaje_personal: string
   vigencia: string
   total_unico: number

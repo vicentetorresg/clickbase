@@ -53,7 +53,8 @@ export default function CotizadorPage() {
   const [correo, setCorreo] = useState('')
   const [telefono, setTelefono] = useState('')
   const [serviciosSeleccionados, setServiciosSeleccionados] = useState<string[]>(['setup'])
-  const [descuento, setDescuento] = useState(0)
+  const [descuentoUnico, setDescuentoUnico] = useState(0)
+  const [descuentoMensual, setDescuentoMensual] = useState(0)
   const [mensajePersonal, setMensajePersonal] = useState('')
   const [vigencia, setVigencia] = useState('')
   const [urlGenerada, setUrlGenerada] = useState('')
@@ -98,8 +99,8 @@ export default function CotizadorPage() {
     (s) => s.tipo === 'monthly' && serviciosSeleccionados.includes(s.id)
   ).reduce((acc, s) => acc + s.precio, 0)
 
-  const totalUnicoFinal = Math.round(totalUnico * (1 - descuento / 100))
-  const totalMensualFinal = Math.round(totalMensual * (1 - descuento / 100))
+  const totalUnicoFinal = Math.round(totalUnico * (1 - descuentoUnico / 100))
+  const totalMensualFinal = Math.round(totalMensual * (1 - descuentoMensual / 100))
 
   const fmt = (n: number) => '$' + n.toLocaleString('es-CL')
 
@@ -116,7 +117,8 @@ export default function CotizadorPage() {
       email_cliente: correo,
       telefono_cliente: telefono,
       servicios: serviciosSeleccionados,
-      descuento,
+      descuento_unico: descuentoUnico,
+      descuento_mensual: descuentoMensual,
       mensaje_personal: mensajePersonal,
       vigencia: vigencia || null,
       total_unico: totalUnicoFinal,
@@ -150,7 +152,8 @@ export default function CotizadorPage() {
         nombre_cliente: nombre,
         email_cliente: correo,
         servicios: serviciosSeleccionados,
-        descuento,
+        descuento_unico: descuentoUnico,
+        descuento_mensual: descuentoMensual,
         mensaje_personal: mensajePersonal,
         vigencia,
         total_unico: totalUnicoFinal,
@@ -333,18 +336,33 @@ export default function CotizadorPage() {
             <div className="card-dark rounded-2xl p-6">
               <h2 className="text-base font-bold text-white mb-5">Opciones</h2>
               <div className="space-y-4">
-                <div>
-                  <label className="block text-sm text-slate-400 mb-1.5">
-                    Descuento (%) <span className="text-slate-600">— opcional</span>
-                  </label>
-                  <input
-                    type="number"
-                    min={0}
-                    max={50}
-                    value={descuento}
-                    onChange={(e) => setDescuento(Number(e.target.value))}
-                    className="w-full bg-dark border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-600 text-sm focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 focus:outline-none"
-                  />
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-sm text-slate-400 mb-1.5">
+                      Dcto. implementación (%)
+                    </label>
+                    <input
+                      type="number"
+                      min={0}
+                      max={50}
+                      value={descuentoUnico}
+                      onChange={(e) => setDescuentoUnico(Number(e.target.value))}
+                      className="w-full bg-dark border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-600 text-sm focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm text-slate-400 mb-1.5">
+                      Dcto. mensual (%)
+                    </label>
+                    <input
+                      type="number"
+                      min={0}
+                      max={50}
+                      value={descuentoMensual}
+                      onChange={(e) => setDescuentoMensual(Number(e.target.value))}
+                      className="w-full bg-dark border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-600 text-sm focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 focus:outline-none"
+                    />
+                  </div>
                 </div>
                 <div>
                   <label className="block text-sm text-slate-400 mb-1.5">
@@ -386,18 +404,14 @@ export default function CotizadorPage() {
                       <span className="font-semibold text-white">{fmt(s.precio)}</span>
                     </div>
                   ))}
-                  {descuento > 0 && (
-                    <div className="flex justify-between items-center text-sm text-emerald-400">
-                      <span>Descuento ({descuento}%)</span>
-                      <span>— aplicado</span>
-                    </div>
-                  )}
                   <div className="h-px bg-white/10 my-2" />
                   {totalUnico > 0 && (
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-slate-400">Pago único</span>
+                      <span className="text-sm text-slate-400">
+                        Pago único{descuentoUnico > 0 && <span className="ml-1 text-emerald-400">−{descuentoUnico}%</span>}
+                      </span>
                       <div className="text-right">
-                        {descuento > 0 && (
+                        {descuentoUnico > 0 && (
                           <div className="text-xs text-slate-600 line-through">{fmt(totalUnico)}</div>
                         )}
                         <span className="text-lg font-extrabold text-white">{fmt(totalUnicoFinal)}</span>
@@ -407,9 +421,11 @@ export default function CotizadorPage() {
                   )}
                   {totalMensual > 0 && (
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-slate-400">Mensual</span>
+                      <span className="text-sm text-slate-400">
+                        Mensual{descuentoMensual > 0 && <span className="ml-1 text-emerald-400">−{descuentoMensual}%</span>}
+                      </span>
                       <div className="text-right">
-                        {descuento > 0 && (
+                        {descuentoMensual > 0 && (
                           <div className="text-xs text-slate-600 line-through">{fmt(totalMensual)}</div>
                         )}
                         <span className="text-lg font-extrabold text-white">{fmt(totalMensualFinal)}</span>

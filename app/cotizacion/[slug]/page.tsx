@@ -108,7 +108,8 @@ export default function CotizacionPage({ params }: { params: { slug: string } })
   const servicios = data.servicios.map((id) => SERVICIOS_MAP[id]).filter(Boolean)
   const unicos = servicios.filter((s) => s.tipo === 'one-time')
   const mensuales = servicios.filter((s) => s.tipo === 'monthly')
-  const descuento = data.descuento || 0
+  const descuentoUnico = data.descuento_unico ?? data.descuento ?? 0
+  const descuentoMensual = data.descuento_mensual ?? data.descuento ?? 0
 
   return (
     <div className="min-h-screen bg-dark text-white">
@@ -162,11 +163,11 @@ export default function CotizacionPage({ params }: { params: { slug: string } })
                   </span>
                 </div>
                 <div className="text-right flex-shrink-0">
-                  {descuento > 0 && (
+                  {(s.tipo === 'one-time' ? descuentoUnico : descuentoMensual) > 0 && (
                     <div className="text-xs text-slate-600 line-through">{fmt(s.precio)}</div>
                   )}
                   <span className="text-xl font-extrabold text-white">
-                    {fmt(Math.round(s.precio * (1 - descuento / 100)))}
+                    {fmt(Math.round(s.precio * (1 - (s.tipo === 'one-time' ? descuentoUnico : descuentoMensual) / 100)))}
                   </span>
                   <span className="text-xs text-slate-500 ml-1">
                     + IVA{s.tipo === 'monthly' ? ' / mes' : ''}
@@ -193,7 +194,7 @@ export default function CotizacionPage({ params }: { params: { slug: string } })
               <div className="flex justify-between items-center">
                 <span className="text-slate-400 text-sm">Pago único (setup)</span>
                 <div className="text-right">
-                  {descuento > 0 && (
+                  {descuentoUnico > 0 && (
                     <div className="text-xs text-slate-600 line-through">
                       {fmt(unicos.reduce((a, s) => a + s.precio, 0))} + IVA
                     </div>
@@ -207,7 +208,7 @@ export default function CotizacionPage({ params }: { params: { slug: string } })
               <div className="flex justify-between items-center">
                 <span className="text-slate-400 text-sm">Mantención mensual</span>
                 <div className="text-right">
-                  {descuento > 0 && (
+                  {descuentoMensual > 0 && (
                     <div className="text-xs text-slate-600 line-through">
                       {fmt(mensuales.reduce((a, s) => a + s.precio, 0))} + IVA/mes
                     </div>
@@ -217,9 +218,14 @@ export default function CotizacionPage({ params }: { params: { slug: string } })
                 </div>
               </div>
             )}
-            {descuento > 0 && (
-              <div className="flex items-center gap-2 p-3 bg-emerald-500/5 border border-emerald-500/20 rounded-xl">
-                <span className="text-emerald-400 text-sm font-semibold">✓ Descuento de {descuento}% aplicado</span>
+            {(descuentoUnico > 0 || descuentoMensual > 0) && (
+              <div className="flex flex-col gap-1 p-3 bg-emerald-500/5 border border-emerald-500/20 rounded-xl">
+                {descuentoUnico > 0 && (
+                  <span className="text-emerald-400 text-sm font-semibold">✓ Descuento de {descuentoUnico}% en implementación</span>
+                )}
+                {descuentoMensual > 0 && (
+                  <span className="text-emerald-400 text-sm font-semibold">✓ Descuento de {descuentoMensual}% en mensual</span>
+                )}
               </div>
             )}
           </div>
