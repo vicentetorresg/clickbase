@@ -4,20 +4,14 @@ import { useState } from 'react'
 
 type FormData = {
   nombre: string
-  empresa: string
   rubro: string
-  email: string
   whatsapp: string
-  mensaje: string
 }
 
 const initialFormData: FormData = {
   nombre: '',
-  empresa: '',
   rubro: '',
-  email: '',
   whatsapp: '',
-  mensaje: '',
 }
 
 export default function CTAFinal() {
@@ -212,21 +206,6 @@ export default function CTAFinal() {
                       />
                     </div>
 
-                    {/* Empresa */}
-                    <div>
-                      <label className="block text-sm font-medium text-slate-300 mb-1.5">
-                        Empresa
-                      </label>
-                      <input
-                        type="text"
-                        name="empresa"
-                        value={formData.empresa}
-                        onChange={handleChange}
-                        placeholder="Nombre de tu empresa (opcional)"
-                        className={inputClass}
-                      />
-                    </div>
-
                     {/* Rubro */}
                     <div>
                       <label className="block text-sm font-medium text-slate-300 mb-1.5">
@@ -243,50 +222,19 @@ export default function CTAFinal() {
                       />
                     </div>
 
-                    {/* Email y WhatsApp en fila */}
-                    <div className="grid sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-sm font-medium text-slate-300 mb-1.5">
-                          Email <span className="text-brand-purple-light">*</span>
-                        </label>
-                        <input
-                          type="email"
-                          name="email"
-                          value={formData.email}
-                          onChange={handleChange}
-                          required
-                          placeholder="tu@email.cl"
-                          className={inputClass}
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-slate-300 mb-1.5">
-                          WhatsApp <span className="text-brand-purple-light">*</span>
-                        </label>
-                        <input
-                          type="tel"
-                          name="whatsapp"
-                          value={formData.whatsapp}
-                          onChange={handleChange}
-                          required
-                          placeholder="+56 9 XXXX XXXX"
-                          className={inputClass}
-                        />
-                      </div>
-                    </div>
-
-                    {/* ¿Qué necesitas? */}
+                    {/* WhatsApp */}
                     <div>
                       <label className="block text-sm font-medium text-slate-300 mb-1.5">
-                        ¿Qué necesitas?
+                        WhatsApp <span className="text-brand-purple-light">*</span>
                       </label>
-                      <textarea
-                        name="mensaje"
-                        value={formData.mensaje}
+                      <input
+                        type="tel"
+                        name="whatsapp"
+                        value={formData.whatsapp}
                         onChange={handleChange}
-                        rows={3}
-                        placeholder="Ej: landing + Google Ads, o solo tracking, o quiero cotizar el setup completo..."
-                        className={`${inputClass} resize-none`}
+                        required
+                        placeholder="+56 9 XXXX XXXX"
+                        className={inputClass}
                       />
                     </div>
                   </div>
@@ -333,7 +281,7 @@ export default function CTAFinal() {
                         Enviando...
                       </>
                     ) : (
-                      'Quiero cotizar mi página + campaña →'
+                      'Quiero mi cotización →'
                     )}
                   </button>
 

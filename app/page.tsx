@@ -14,6 +14,7 @@ import Testimonials from '@/components/Testimonials'
 import AboutUs from '@/components/AboutUs'
 import AboutPreview from '@/components/AboutPreview'
 import FAQ from '@/components/FAQ'
+import ProductMockup from '@/components/ProductMockup'
 import CTAFinal from '@/components/CTAFinal'
 import StickyMobileCTA from '@/components/StickyMobileCTA'
 
@@ -144,6 +145,7 @@ export default function Home() {
         <AboutPreview />
         <Problem />
         <Solution />
+        <ProductMockup />
         <WhatIncludes />
         <Pricing />
         <HowItWorks />
