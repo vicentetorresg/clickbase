@@ -12,20 +12,22 @@ export const metadata: Metadata = {
   title: 'Página Web + Google Ads + Tracking | ClickBase',
   description:
     'Landing page de alta conversión + Google Ads o Meta Ads + GTM + Meta Pixel. Setup desde $699.990 + IVA. Base lista para captar leads. ClickBase.',
+  metadataBase: new URL('https://clickbase.cl'),
   openGraph: {
     title: 'Página Web + Google Ads + Tracking | ClickBase',
     description:
-      'Landing page de alta conversión + Google Ads o Meta Ads + GTM + Meta Pixel. Setup desde $699.990 + IVA. Base lista para captar leads. ClickBase.',
+      'Landing page de alta conversión + Google Ads o Meta Ads + GTM + Meta Pixel. Setup desde $699.990 + IVA. Base lista para captar leads.',
     type: 'website',
     locale: 'es_CL',
-    // url: 'https://tu-dominio.cl', // TODO: Replace with real URL
-    // images: [{ url: 'https://tu-dominio.cl/og-image.jpg', width: 1200, height: 630 }],
+    url: 'https://clickbase.cl',
+    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'ClickBase — Página Web + Ads + Tracking' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Página Web + Google Ads + Tracking | ClickBase',
     description:
       'Landing page de alta conversión + Google Ads o Meta Ads + GTM + Meta Pixel. Setup desde $699.990 + IVA.',
+    images: ['/opengraph-image'],
   },
   robots: {
     index: true,
