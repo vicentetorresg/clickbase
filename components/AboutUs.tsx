@@ -32,15 +32,16 @@ export default function AboutUs() {
 
               {/* Name + title */}
               <div className="text-center lg:text-left">
-                <h3 className="text-2xl font-extrabold text-white mb-1">Vicente Torres</h3>
-                <p className="text-brand-purple-light text-sm font-semibold">Fundador · ClickBase</p>
+                <h3 className="text-2xl font-extrabold text-white mb-1">Vicente Torres G.</h3>
+                <p className="text-brand-purple-light text-sm font-semibold mb-1">CEO @ Proppi · Fundador ClickBase</p>
+                <p className="text-slate-500 text-xs">Ing. Civil Industrial · PUC Chile</p>
               </div>
 
               {/* Quick stats */}
               <div className="flex gap-6">
                 <div className="text-center">
-                  <p className="text-2xl font-extrabold text-white">+5</p>
-                  <p className="text-xs text-slate-500">años en ads</p>
+                  <p className="text-2xl font-extrabold text-white">+500</p>
+                  <p className="text-xs text-slate-500">contactos</p>
                 </div>
                 <div className="w-px bg-white/10" />
                 <div className="text-center">
@@ -49,8 +50,8 @@ export default function AboutUs() {
                 </div>
                 <div className="w-px bg-white/10" />
                 <div className="text-center">
-                  <p className="text-2xl font-extrabold text-white">12+</p>
-                  <p className="text-xs text-slate-500">industrias</p>
+                  <p className="text-2xl font-extrabold text-white">3</p>
+                  <p className="text-xs text-slate-500">startups</p>
                 </div>
               </div>
             </div>
@@ -59,23 +60,24 @@ export default function AboutUs() {
             <div>
               <span className="section-label">Quién está detrás</span>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-white mt-4 mb-5 leading-tight">
-                No somos una agencia grande.<br />
-                <span className="gradient-text">Somos los que hacen el trabajo.</span>
+                No es una agencia anónima.<br />
+                <span className="gradient-text">Hay una persona real detrás.</span>
               </h2>
 
-              {/* TODO: Personaliza este texto con tu historia real */}
               <div className="space-y-4 text-slate-400 text-sm leading-relaxed">
                 <p>
-                  Llevo más de 5 años configurando campañas de Google Ads y Meta Ads para pymes y
-                  profesionales en Chile. He visto de cerca cómo negocios con buen producto pierden
-                  plata en publicidad por no tener la base técnica correcta.
+                  Soy Ingeniero Civil Industrial de la PUC, CEO de Proppi y fundador de múltiples
+                  startups. A lo largo de estos años me especialicé en Paid Media porque vi de cerca
+                  cómo negocios con buen producto pierden plata en publicidad por no tener la base
+                  técnica correcta.
                 </p>
                 <p>
-                  ClickBase nació para solucionar exactamente eso: entrar, instalar bien, y dejar
-                  todo funcionando. Sin humo, sin contratos eternos, sin promesas vacías.
+                  Configurar bien Google Ads, Meta Pixel y GTM no es magia — pero sí requiere
+                  criterio y experiencia. ClickBase existe para que no tengas que aprenderlo tú:
+                  yo lo instalo, lo dejo funcionando y te entrego todo listo para captar leads.
                 </p>
-                <p className="text-white font-medium">
-                  Cada proyecto lo reviso personalmente antes de entregar.
+                <p className="text-white font-semibold">
+                  Cada proyecto pasa por mis manos antes de entregarse.
                 </p>
               </div>
 
