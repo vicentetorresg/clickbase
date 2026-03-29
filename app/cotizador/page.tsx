@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { supabase } from '@/lib/supabase'
 
 const SERVICIOS = [
   {
@@ -37,11 +38,14 @@ const SERVICIOS = [
   },
 ]
 
-type LoginState = 'idle' | 'error'
+function generarSlug() {
+  const chars = 'abcdefghijklmnopqrstuvwxyz0123456789'
+  return Array.from({ length: 8 }, () => chars[Math.floor(Math.random() * chars.length)]).join('')
+}
 
 export default function CotizadorPage() {
   const [authed, setAuthed] = useState(false)
-  const [loginState, setLoginState] = useState<LoginState>('idle')
+  const [loginError, setLoginError] = useState(false)
   const [usuario, setUsuario] = useState('')
   const [clave, setClave] = useState('')
 
@@ -54,15 +58,13 @@ export default function CotizadorPage() {
   const [vigencia, setVigencia] = useState('')
   const [urlGenerada, setUrlGenerada] = useState('')
   const [copiado, setCopiado] = useState(false)
+  const [guardando, setGuardando] = useState(false)
+  const [errorGuardar, setErrorGuardar] = useState('')
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setAuthed(localStorage.getItem('cb_auth') === 'true')
     }
-  }, [])
-
-  // Set default vigencia to 7 days from now
-  useEffect(() => {
     const d = new Date()
     d.setDate(d.getDate() + 7)
     setVigencia(d.toISOString().split('T')[0])
@@ -74,7 +76,7 @@ export default function CotizadorPage() {
       localStorage.setItem('cb_auth', 'true')
       setAuthed(true)
     } else {
-      setLoginState('error')
+      setLoginError(true)
     }
   }
 
@@ -92,24 +94,61 @@ export default function CotizadorPage() {
     (s) => s.tipo === 'monthly' && serviciosSeleccionados.includes(s.id)
   ).reduce((acc, s) => acc + s.precio, 0)
 
-  const totalUnicoConDescuento = Math.round(totalUnico * (1 - descuento / 100))
-  const totalMensualConDescuento = Math.round(totalMensual * (1 - descuento / 100))
+  const totalUnicoFinal = Math.round(totalUnico * (1 - descuento / 100))
+  const totalMensualFinal = Math.round(totalMensual * (1 - descuento / 100))
 
-  const fmt = (n: number) =>
-    '$' + n.toLocaleString('es-CL')
+  const fmt = (n: number) => '$' + n.toLocaleString('es-CL')
 
-  const generarUrl = () => {
-    const data = {
-      cliente: { nombre, correo, telefono },
+  const generarUrl = async () => {
+    setGuardando(true)
+    setErrorGuardar('')
+    setUrlGenerada('')
+
+    const slug = generarSlug()
+
+    const { error } = await supabase.from('cotizaciones').insert({
+      slug,
+      nombre_cliente: nombre,
+      email_cliente: correo,
+      telefono_cliente: telefono,
       servicios: serviciosSeleccionados,
       descuento,
-      mensajePersonal,
-      vigencia,
-      createdAt: new Date().toISOString(),
+      mensaje_personal: mensajePersonal,
+      vigencia: vigencia || null,
+      total_unico: totalUnicoFinal,
+      total_mensual: totalMensualFinal,
+      creado_por: 'vtorres',
+    })
+
+    if (error) {
+      setErrorGuardar('Error al guardar: ' + error.message)
+      setGuardando(false)
+      return
     }
-    const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(data))))
-    const url = `${window.location.origin}/cotizacion?q=${encoded}`
+
+    const url = `${window.location.origin}/cotizacion/${slug}`
+
+    // Enviar email si hay correo
+    if (correo) {
+      await fetch('/api/send-cotizacion', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          slug,
+          nombre_cliente: nombre,
+          email_cliente: correo,
+          servicios: serviciosSeleccionados,
+          descuento,
+          mensaje_personal: mensajePersonal,
+          vigencia,
+          total_unico: totalUnicoFinal,
+          total_mensual: totalMensualFinal,
+        }),
+      })
+    }
+
     setUrlGenerada(url)
+    setGuardando(false)
   }
 
   const copiarUrl = () => {
@@ -129,11 +168,7 @@ export default function CotizadorPage() {
             </div>
             <p className="text-slate-500 text-sm">Cotizador interno</p>
           </div>
-
-          <form
-            onSubmit={handleLogin}
-            className="card-dark rounded-2xl p-8 space-y-4"
-          >
+          <form onSubmit={handleLogin} className="card-dark rounded-2xl p-8 space-y-4">
             <h2 className="text-lg font-bold text-white mb-2">Iniciar sesión</h2>
             <div>
               <label className="block text-sm text-slate-400 mb-1.5">Usuario</label>
@@ -155,7 +190,7 @@ export default function CotizadorPage() {
                 className="w-full bg-dark border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-600 text-sm focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/20 focus:outline-none"
               />
             </div>
-            {loginState === 'error' && (
+            {loginError && (
               <p className="text-red-400 text-sm">Usuario o contraseña incorrectos.</p>
             )}
             <button
@@ -180,10 +215,7 @@ export default function CotizadorPage() {
           <span className="text-slate-600 text-sm ml-2">/ Cotizador</span>
         </div>
         <button
-          onClick={() => {
-            localStorage.removeItem('cb_auth')
-            setAuthed(false)
-          }}
+          onClick={() => { localStorage.removeItem('cb_auth'); setAuthed(false) }}
           className="text-xs text-slate-500 hover:text-white transition-colors"
         >
           Cerrar sesión
@@ -323,13 +355,11 @@ export default function CotizadorPage() {
             </div>
           </div>
 
-          {/* RIGHT: Preview + generate */}
+          {/* RIGHT: Resumen + generar */}
           <div className="lg:sticky lg:top-8 space-y-6 self-start">
 
-            {/* Resumen */}
             <div className="card-dark rounded-2xl p-6">
               <h2 className="text-base font-bold text-white mb-5">Resumen</h2>
-
               {serviciosSeleccionados.length === 0 ? (
                 <p className="text-sm text-slate-600">Selecciona al menos un servicio.</p>
               ) : (
@@ -340,16 +370,13 @@ export default function CotizadorPage() {
                       <span className="font-semibold text-white">{fmt(s.precio)}</span>
                     </div>
                   ))}
-
                   {descuento > 0 && (
                     <div className="flex justify-between items-center text-sm text-emerald-400">
                       <span>Descuento ({descuento}%)</span>
                       <span>— aplicado</span>
                     </div>
                   )}
-
                   <div className="h-px bg-white/10 my-2" />
-
                   {totalUnico > 0 && (
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-slate-400">Pago único</span>
@@ -357,12 +384,11 @@ export default function CotizadorPage() {
                         {descuento > 0 && (
                           <div className="text-xs text-slate-600 line-through">{fmt(totalUnico)}</div>
                         )}
-                        <span className="text-lg font-extrabold text-white">{fmt(totalUnicoConDescuento)}</span>
+                        <span className="text-lg font-extrabold text-white">{fmt(totalUnicoFinal)}</span>
                         <span className="text-xs text-slate-500 ml-1">+ IVA</span>
                       </div>
                     </div>
                   )}
-
                   {totalMensual > 0 && (
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-slate-400">Mensual</span>
@@ -370,7 +396,7 @@ export default function CotizadorPage() {
                         {descuento > 0 && (
                           <div className="text-xs text-slate-600 line-through">{fmt(totalMensual)}</div>
                         )}
-                        <span className="text-lg font-extrabold text-white">{fmt(totalMensualConDescuento)}</span>
+                        <span className="text-lg font-extrabold text-white">{fmt(totalMensualFinal)}</span>
                         <span className="text-xs text-slate-500 ml-1">+ IVA / mes</span>
                       </div>
                     </div>
@@ -379,24 +405,36 @@ export default function CotizadorPage() {
               )}
             </div>
 
-            {/* Generate button */}
             <button
               type="button"
               onClick={generarUrl}
-              disabled={!nombre || serviciosSeleccionados.length === 0}
-              className={`w-full gradient-bg text-white font-bold py-4 rounded-xl text-sm transition-all duration-200 ${
-                !nombre || serviciosSeleccionados.length === 0
+              disabled={!nombre || serviciosSeleccionados.length === 0 || guardando}
+              className={`w-full gradient-bg text-white font-bold py-4 rounded-xl text-sm transition-all duration-200 flex items-center justify-center gap-2 ${
+                !nombre || serviciosSeleccionados.length === 0 || guardando
                   ? 'opacity-40 cursor-not-allowed'
                   : 'hover:opacity-90 hover:shadow-glow-purple'
               }`}
             >
-              Generar URL de cotización →
+              {guardando ? (
+                <>
+                  <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                  </svg>
+                  Guardando...
+                </>
+              ) : 'Generar URL de cotización →'}
             </button>
 
-            {/* Generated URL */}
+            {errorGuardar && (
+              <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-xl text-sm text-red-400">
+                ⚠️ {errorGuardar}
+              </div>
+            )}
+
             {urlGenerada && (
               <div className="card-dark rounded-2xl p-5 space-y-3">
-                <p className="text-sm font-semibold text-white">URL generada</p>
+                <p className="text-sm font-semibold text-white">✓ Cotización guardada{correo ? ' · Email enviado' : ''}</p>
                 <div className="bg-dark rounded-xl p-3 border border-slate-700 break-all text-xs text-slate-400 font-mono">
                   {urlGenerada}
                 </div>
@@ -418,8 +456,8 @@ export default function CotizadorPage() {
                 </div>
               </div>
             )}
-          </div>
 
+          </div>
         </div>
       </div>
     </div>
