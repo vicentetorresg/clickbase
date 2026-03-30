@@ -35,10 +35,23 @@ export default function Hero() {
             </h1>
 
             {/* Subtitle */}
-            <p className="text-lg text-slate-400 mb-8 leading-relaxed max-w-xl">
+            <p className="text-lg text-slate-400 mb-6 leading-relaxed max-w-xl">
               No solo una página bonita. Una base técnica completa para que tus
               campañas funcionen, tu tracking mida y tus leads lleguen.
             </p>
+
+            {/* Author strip */}
+            <div className="flex items-center gap-3 mb-8 p-3 rounded-xl bg-dark-card/60 border border-slate-800 w-fit">
+              <img
+                src="/vicente.png"
+                alt="Vicente Torres G."
+                className="w-9 h-9 rounded-lg object-cover object-top flex-shrink-0"
+              />
+              <div>
+                <p className="text-sm font-semibold text-white leading-tight">Vicente Torres G.</p>
+                <p className="text-xs text-slate-500">Ing. Civil Industrial PUC · CEO Proppi</p>
+              </div>
+            </div>
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4 mb-8">
