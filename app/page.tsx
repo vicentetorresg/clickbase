@@ -9,7 +9,6 @@ import WhatIncludes from '@/components/WhatIncludes'
 import Pricing from '@/components/Pricing'
 import HowItWorks from '@/components/HowItWorks'
 import WhoIsItFor from '@/components/WhoIsItFor'
-import Benefits from '@/components/Benefits'
 import Testimonials from '@/components/Testimonials'
 import AboutUs from '@/components/AboutUs'
 import AboutPreview from '@/components/AboutPreview'
@@ -150,7 +149,6 @@ export default function Home() {
         <Pricing />
         <HowItWorks />
         <WhoIsItFor />
-        <Benefits />
         <Testimonials />
         <AboutUs />
         <FAQ />

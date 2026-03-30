@@ -1,8 +1,8 @@
 const stats = [
-  { value: '+150', label: 'proyectos configurados' },
-  { value: '3.2x', label: 'ROI promedio' },
-  { value: 'Día 1', label: 'Tracking desde el inicio' },
-  { value: '24/7', label: 'Soporte por WhatsApp' },
+  { value: '7 días', label: 'Entrega del setup completo' },
+  { value: '100%', label: 'Tracking activo desde día 1' },
+  { value: 'Google + Meta', label: 'Plataformas configuradas' },
+  { value: 'WhatsApp', label: 'Soporte directo incluido' },
 ]
 
 export default function TrustBar() {

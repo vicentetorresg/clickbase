@@ -1,9 +1,9 @@
 const testimonials = [
   {
-    initials: 'MF',
-    name: 'Dr. Marcelo Fuentes',
-    company: 'Centro Médico Providencia',
-    industry: 'Clínica',
+    initials: 'M',
+    name: 'Médico · Clínica particular',
+    company: 'Santiago',
+    industry: 'Salud',
     color: '#7C3AED',
     stars: 5,
     quote:
@@ -11,9 +11,9 @@ const testimonials = [
     result: '+5 consultas/semana',
   },
   {
-    initials: 'VR',
-    name: 'Valentina Riquelme',
-    company: 'VR Propiedades',
+    initials: 'V',
+    name: 'Corredora de propiedades',
+    company: 'Región Metropolitana',
     industry: 'Inmobiliaria',
     color: '#06B6D4',
     stars: 5,
@@ -22,10 +22,10 @@ const testimonials = [
     result: 'Costo por lead -40%',
   },
   {
-    initials: 'JS',
-    name: 'Jorge Salas',
-    company: 'Salas & Asociados',
-    industry: 'Estudio Jurídico',
+    initials: 'J',
+    name: 'Socio · Estudio jurídico',
+    company: 'Santiago',
+    industry: 'Legal',
     color: '#10B981',
     stars: 5,
     quote:

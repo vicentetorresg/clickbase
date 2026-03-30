@@ -22,8 +22,8 @@ export default function Hero() {
           <div className="animate-fade-up">
             {/* Badge pill */}
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-brand-purple/40 bg-brand-purple/10 text-sm font-medium text-brand-purple-light mb-8 glow-purple">
-              <span>🚀</span>
-              <span>Setup completo desde $699.990 + IVA</span>
+              <span className="w-2 h-2 rounded-full bg-success animate-pulse inline-block" />
+              <span>Especialistas en Paid Media y tracking para PYMEs</span>
             </div>
 
             {/* H1 */}
