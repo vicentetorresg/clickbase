@@ -592,7 +592,7 @@ export default function Embudo2() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
-            <CTAButton text="Diagnosticar mi campaña ahora" size="xl" />
+            <CTAButton text="Quiero empezar ahora" size="xl" />
           </div>
 
           <p className="text-slate-500 text-sm">
