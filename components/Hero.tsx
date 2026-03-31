@@ -91,14 +91,14 @@ export default function Hero() {
                 <div className="flex items-center gap-2 text-sm text-slate-300">
                   <span className="w-2 h-2 rounded-full bg-success inline-block flex-shrink-0" />
                   Setup:
-                  <span className="line-through text-slate-400 font-medium">$999.990</span>
-                  <span className="font-bold text-white text-base">$699.990</span>
+                  <span className="line-through text-slate-400 font-medium">$999.990 + IVA</span>
+                  <span className="font-bold text-white text-base">$699.990 + IVA</span>
                   <span className="text-xs font-bold text-success bg-success/10 border border-success/20 rounded-full px-1.5 py-0.5">−30%</span>
                 </div>
                 <div className="flex items-center gap-2 pl-4">
                   <img src="/mercadopago.svg" alt="Mercado Pago" className="h-5 w-auto flex-shrink-0" />
                   <span className="text-xs text-slate-300">
-                    o en <span className="text-white font-semibold">3 cuotas sin interés</span> de <span className="text-white font-bold">$233.330</span>
+                    o en <span className="text-white font-semibold">3 cuotas sin interés</span> de <span className="text-white font-bold">$233.330 + IVA</span>
                   </span>
                 </div>
               </div>

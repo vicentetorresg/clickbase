@@ -104,7 +104,7 @@ export async function POST(req: Request) {
           <span style="display:inline-block;margin-left:8px;font-size:11px;background:rgba(124,58,237,0.15);color:#a78bfa;border:1px solid rgba(124,58,237,0.3);border-radius:20px;padding:2px 8px;">${s.tipo}</span>
         </div>
         <div style="text-align:right;flex-shrink:0;">
-          ${s.precioLista ? `<div style="font-size:14px;color:#94a3b8;text-decoration:line-through;font-weight:500;">${fmt(s.precioLista)}</div>` : desc > 0 ? `<div style="font-size:14px;color:#94a3b8;text-decoration:line-through;font-weight:500;">${fmt(s.precio)}</div>` : ''}
+          ${s.precioLista ? `<div style="font-size:14px;color:#94a3b8;text-decoration:line-through;font-weight:500;">${fmt(s.precioLista)} + IVA</div>` : desc > 0 ? `<div style="font-size:14px;color:#94a3b8;text-decoration:line-through;font-weight:500;">${fmt(s.precio)} + IVA</div>` : ''}
           <span style="font-size:18px;font-weight:800;color:#fff;">${fmt(Math.round(s.precio * (1 - desc / 100)))}</span>
           <span style="font-size:11px;color:#64748b;margin-left:4px;">+ IVA${s.tipo === 'Mensual' ? ' / mes' : ''}</span>
         </div>

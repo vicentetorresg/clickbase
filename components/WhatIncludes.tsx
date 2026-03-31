@@ -53,7 +53,7 @@ export default function WhatIncludes() {
           <span className="section-label">Qué incluye</span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mt-4 mb-6 max-w-2xl mx-auto leading-tight">
             Todo lo que incluye el setup de{' '}
-            <span className="line-through text-slate-300 font-medium">$999.990</span>{' '}
+            <span className="line-through text-slate-300 font-medium">$999.990 + IVA</span>{' '}
             <span className="gradient-text">$699.990 + IVA</span>
           </h2>
           <p className="text-lg text-slate-400 max-w-xl mx-auto">
@@ -81,7 +81,7 @@ export default function WhatIncludes() {
             <div>
               <p className="text-sm text-slate-400 mb-1">Todo lo anterior por</p>
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-base text-slate-300 line-through font-medium">$999.990</span>
+                <span className="text-base text-slate-300 line-through font-medium">$999.990 + IVA</span>
                 <span className="text-xs font-bold text-success bg-success/10 border border-success/25 rounded-full px-2 py-0.5">−30%</span>
               </div>
               <p className="text-4xl font-extrabold text-white">

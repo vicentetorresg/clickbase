@@ -389,7 +389,7 @@ export default function Embudo2() {
           <div className="text-center p-6 rounded-2xl bg-gradient-to-r from-brand-purple/10 to-brand-cyan/10 border border-brand-purple/30">
             <div className="flex items-center justify-center gap-2 flex-wrap mb-1">
               <span className="text-2xl font-extrabold text-white">Setup completo:</span>
-              <span className="text-xl text-slate-300 line-through font-medium">$999.990</span>
+              <span className="text-xl text-slate-300 line-through font-medium">$999.990 + IVA</span>
               <span className="text-2xl font-extrabold gradient-text">$699.990 + IVA</span>
               <span className="text-xs font-bold text-success bg-success/10 border border-success/25 rounded-full px-2 py-0.5">−30%</span>
             </div>
@@ -510,11 +510,11 @@ export default function Embudo2() {
               <div className="absolute top-4 right-4 text-xs font-bold px-2.5 py-1 rounded-full gradient-bg text-white">Más popular</div>
               <p className="text-slate-400 text-sm mb-2">Setup + corrección</p>
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-base text-slate-300 line-through font-medium">$999.990</span>
+                <span className="text-base text-slate-300 line-through font-medium">$999.990 + IVA</span>
                 <span className="text-xs font-bold text-success bg-success/10 border border-success/25 rounded-full px-2 py-0.5">−30%</span>
               </div>
-              <p className="text-4xl font-extrabold text-white mb-1">$699.990</p>
-              <p className="text-slate-500 text-xs mb-3">+ IVA · Pago único</p>
+              <p className="text-4xl font-extrabold text-white mb-1">$699.990 <span className="text-xl font-normal text-slate-400">+ IVA</span></p>
+              <p className="text-slate-500 text-xs mb-3">Pago único</p>
               <div className="flex items-center gap-1.5 mb-6">
                 <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse inline-block flex-shrink-0" />
                 <span className="text-xs text-amber-400 font-medium">Solo 10 cupos disponibles este mes <span className="font-normal opacity-80">(para garantizar un trabajo personalizado para tu negocio)</span></span>

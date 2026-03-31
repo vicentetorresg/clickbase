@@ -180,7 +180,7 @@ export default function Pricing() {
                   <p className="text-xs text-white leading-tight">
                     Hasta <span className="font-semibold">3 cuotas sin interés</span>
                     <br />
-                    <span className="text-white/70">de </span><span className="text-white font-bold">$233.330</span><span className="text-white/70"> / cuota</span>
+                    <span className="text-white/70">de </span><span className="text-white font-bold">$233.330 + IVA</span><span className="text-white/70"> / cuota</span>
                   </p>
                 </div>
               )}
