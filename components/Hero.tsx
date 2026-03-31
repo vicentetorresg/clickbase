@@ -81,7 +81,7 @@ export default function Hero() {
             {/* Scarcity */}
             <div className="flex items-center gap-1.5 mb-4">
               <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse inline-block flex-shrink-0" />
-              <span className="text-xs text-amber-400 font-medium">Solo 10 cupos disponibles este mes <span className="font-normal opacity-80">(para garantizar un trabajo personalizado para tu negocio)</span></span>
+              <span className="text-xs text-amber-400 font-medium">Solo 10 cupos disponibles por mes <span className="font-normal opacity-80">(para garantizar un trabajo personalizado para tu negocio)</span></span>
             </div>
 
             {/* Price pills */}

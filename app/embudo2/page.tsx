@@ -517,7 +517,7 @@ export default function Embudo2() {
               <p className="text-slate-500 text-xs mb-3">Pago único</p>
               <div className="flex items-center gap-1.5 mb-6">
                 <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse inline-block flex-shrink-0" />
-                <span className="text-xs text-amber-400 font-medium">Solo 10 cupos disponibles este mes <span className="font-normal opacity-80">(para garantizar un trabajo personalizado para tu negocio)</span></span>
+                <span className="text-xs text-amber-400 font-medium">Solo 10 cupos disponibles por mes <span className="font-normal opacity-80">(para garantizar un trabajo personalizado para tu negocio)</span></span>
               </div>
               <ul className="space-y-3 mb-8">
                 {['Auditoría de tracking existente', 'Landing nueva o corregida', 'Google Tag Manager correcto', 'Meta Pixel verificado', 'Conversiones reconfiguradas', 'Campaña relanzada o corregida'].map((item) => (
