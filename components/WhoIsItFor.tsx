@@ -61,7 +61,7 @@ export default function WhoIsItFor() {
             <span className="gradient-text">más leads</span>, no más excusas.
           </h2>
           <p className="text-lg text-slate-400 max-w-xl mx-auto">
-            Si vendés por formulario o WhatsApp, esta base es para ti.
+            Si vendes por formulario o WhatsApp, esta base es para ti.
           </p>
         </div>
 
