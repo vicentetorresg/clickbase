@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { fbq } from '@/lib/fbq'
 
 export default function StickyMobileCTA() {
   const [visible, setVisible] = useState(false)
@@ -29,6 +30,7 @@ export default function StickyMobileCTA() {
 
   const handleWhatsAppClick = () => {
     pushEvent({ event: 'whatsapp_click', location: 'sticky_mobile' })
+    fbq('track', 'Contact')
   }
 
   return (

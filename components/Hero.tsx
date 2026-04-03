@@ -1,3 +1,7 @@
+'use client'
+
+import { fbq } from '@/lib/fbq'
+
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center pt-16 overflow-hidden">
@@ -55,11 +59,11 @@ export default function Hero() {
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4 mb-8">
-              {/* GTM note: add dataLayer.push({ event: 'whatsapp_click', location: 'hero' }) via GTM trigger on this element */}
               <a
                 href="https://wa.me/56994366697?text=Hola%2C%20quiero%20cotizar%20la%20p%C3%A1gina%20web%20%2B%20campa%C3%B1a%20%2B%20tracking.%20%C2%BFMe%20pueden%20dar%20m%C3%A1s%20informaci%C3%B3n%3F"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => fbq('track', 'Contact')}
                 className="flex items-center justify-center gap-2.5 bg-[#25D366] hover:bg-[#1ebe5d] text-white font-bold px-8 py-4 rounded-xl text-base transition-all duration-200"
                 style={{ boxShadow: '0 0 24px rgba(37, 211, 102, 0.3)' }}
               >

@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { fbq } from '@/lib/fbq'
 
 export default function Navigation() {
   const [scrolled, setScrolled] = useState(false)
@@ -66,6 +67,7 @@ export default function Navigation() {
               href="https://wa.me/56994366697?text=Hola%2C%20quiero%20cotizar%20la%20p%C3%A1gina%20web%20%2B%20campa%C3%B1a%20%2B%20tracking.%20%C2%BFMe%20pueden%20dar%20m%C3%A1s%20informaci%C3%B3n%3F"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => fbq('track', 'Contact')}
               className="flex items-center gap-2 text-sm font-semibold text-[#25D366] border border-[#25D366]/30 hover:bg-[#25D366]/10 transition-colors duration-200 px-4 py-2.5 rounded-lg overflow-visible"
               aria-label="WhatsApp"
             >

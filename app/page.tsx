@@ -1,6 +1,7 @@
 'use client'
 
 import Navigation from '@/components/Navigation'
+import { fbq } from '@/lib/fbq'
 import Hero from '@/components/Hero'
 import TrustBar from '@/components/TrustBar'
 import Problem from '@/components/Problem'
@@ -39,6 +40,7 @@ function Footer() {
               href="https://wa.me/56994366697?text=Hola%2C%20quiero%20cotizar%20la%20p%C3%A1gina%20web%20%2B%20campa%C3%B1a%20%2B%20tracking.%20%C2%BFMe%20pueden%20dar%20m%C3%A1s%20informaci%C3%B3n%3F"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => fbq('track', 'Contact')}
               className="inline-flex items-center gap-2 text-sm text-[#25D366] hover:text-white transition-colors duration-200 font-medium"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
@@ -168,6 +170,7 @@ export default function Home() {
               href="https://wa.me/56994366697?text=Hola%2C%20quiero%20cotizar%20la%20p%C3%A1gina%20web%20%2B%20campa%C3%B1a%20%2B%20tracking.%20%C2%BFMe%20pueden%20dar%20m%C3%A1s%20informaci%C3%B3n%3F"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => fbq('track', 'Contact')}
               className="inline-flex items-center gap-2.5 bg-[#25D366] hover:bg-[#1ebe5d] text-white font-bold px-8 py-4 rounded-xl text-base transition-all duration-200"
               style={{ boxShadow: '0 0 20px rgba(37, 211, 102, 0.25)' }}
             >
