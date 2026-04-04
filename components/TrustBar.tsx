@@ -1,8 +1,8 @@
 const stats = [
   { value: '7 días', label: 'Entrega del setup completo' },
-  { value: '100%', label: 'Tracking activo desde día 1' },
-  { value: 'Google + Meta', label: 'Plataformas configuradas' },
-  { value: 'WhatsApp', label: 'Soporte directo incluido' },
+  { value: '+20', label: 'PYMEs atendidas' },
+  { value: '1er mes', label: 'Para ver los primeros clientes' },
+  { value: 'WhatsApp', label: 'Soporte directo, sin intermediarios' },
 ]
 
 export default function TrustBar() {

@@ -23,18 +23,6 @@ const painPoints = [
     description:
       'Pagaste a alguien para hacer anuncios, no llegaron clientes y quedaste con la sensación de que "el marketing digital no funciona".',
   },
-  {
-    icon: '🤷',
-    title: 'No tienes idea si tu página web te está generando clientes o no',
-    description:
-      'Tienes una web, pero no sabes cuántas personas la visitan, de dónde vienen ni si alguien la usa para contactarte.',
-  },
-  {
-    icon: '⏳',
-    title: 'No tienes tiempo para aprender marketing — tienes un negocio que atender',
-    description:
-      'YouTube, cursos, agencias que no explican nada... El marketing digital parece diseñado para confundirte, no para ayudarte.',
-  },
 ]
 
 export default function Problem() {

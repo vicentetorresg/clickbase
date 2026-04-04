@@ -7,7 +7,7 @@ const testimonials = [
     color: '#7C3AED',
     stars: 5,
     quote:
-      'Antes dependíamos del boca a boca. Hoy recibimos entre 4 y 6 consultas nuevas por semana desde Google. El tracking nos permite saber exactamente qué anuncio las genera.',
+      'Antes dependíamos del boca a boca y había meses muy malos. Hoy recibimos entre 4 y 6 consultas nuevas por semana. El negocio por fin tiene un flujo constante de pacientes.',
     result: '+5 consultas/semana',
   },
   {
@@ -18,8 +18,8 @@ const testimonials = [
     color: '#06B6D4',
     stars: 5,
     quote:
-      'Lo que más me sorprendió fue la claridad. Desde el día uno supe cuántos leads llegaban, desde qué anuncio y a qué costo. Nunca había tenido esa información.',
-    result: 'Costo por lead -40%',
+      'Había gastado plata en publicidad antes y nunca funcionó. Con ClickBase fue distinto: en el primer mes ya tenía clientes llegando solos. Por fin siento que el negocio está creciendo.',
+    result: '+40% clientes en 3 meses',
   },
   {
     initials: 'J',
@@ -29,7 +29,7 @@ const testimonials = [
     color: '#10B981',
     stars: 5,
     quote:
-      'El setup estuvo listo en una semana. Yo solo entregué la información de mi negocio y ellos construyeron todo. La primera semana de campaña ya teníamos 3 consultas.',
+      'Yo solo les conté de mi negocio y ellos construyeron todo. En una semana estaba listo y la primera semana de campaña ya teníamos 3 consultas nuevas. No esperaba resultados tan rápido.',
     result: '3 consultas en 1ª semana',
   },
 ]

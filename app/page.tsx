@@ -143,7 +143,6 @@ export default function Home() {
       <main>
         <Hero />
         <TrustBar />
-        <AboutPreview />
         <Problem />
         <Solution />
         <ProductMockup />
