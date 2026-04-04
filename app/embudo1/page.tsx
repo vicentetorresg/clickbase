@@ -130,7 +130,7 @@ function WAModal({ onClose, onConfirm }: { onClose: () => void; onConfirm: () =>
       onClick={onClose}
     >
       <div
-        className="bg-[#0f0f1a] border border-brand-purple/30 rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl"
+        className="bg-[#0f0f1a] border border-brand-purple/30 rounded-3xl p-6 sm:p-8 max-w-sm w-full text-center shadow-2xl"
         onClick={e => e.stopPropagation()}
       >
         <img
