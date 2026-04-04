@@ -700,7 +700,7 @@ export default function OnboardingPage() {
             Recibimos toda tu información. Nos pondremos en contacto contigo a la brevedad para coordinar los siguientes pasos.
           </p>
           <a
-            href="https://wa.me/56994366697?text=Hola%2C%20acabo%20de%20completar%20el%20formulario%20de%20onboarding.%20%C2%BFMe%20pueden%20confirmar%20que%20lo%20recibieron%3F"
+            href="https://wa.me/56955350255?text=Hola%2C%20acabo%20de%20completar%20el%20formulario%20de%20onboarding.%20%C2%BFMe%20pueden%20confirmar%20que%20lo%20recibieron%3F"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebe5d] text-white font-bold px-6 py-3 rounded-xl text-sm transition-all duration-200 mb-4"

@@ -5,7 +5,7 @@ const resend = new Resend(process.env.RESEND_API_KEY)
 
 const FROM_EMAIL = 'ClickBase <notificaciones@priceguard.cl>'
 const CC_EMAIL = 'vicente.torres@proppi.cl'
-const WHATSAPP_URL = 'https://wa.me/56994366697?text=Hola%20Vicente%2C%20recibí%20la%20cotización%20y%20quiero%20avanzar.'
+const WHATSAPP_URL = 'https://wa.me/56955350255?text=Hola%20Vicente%2C%20recibí%20la%20cotización%20y%20quiero%20avanzar.'
 
 const SERVICIOS_DETALLE: Record<string, {
   nombre: string

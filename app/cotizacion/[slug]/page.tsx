@@ -243,7 +243,7 @@ export default function CotizacionPage({ params }: { params: { slug: string } })
             Escríbeme por WhatsApp y cerramos los detalles.
           </p>
           <a
-            href="https://wa.me/56994366697?text=Hola%20Vicente%2C%20recibí%20la%20cotización%20y%20quiero%20avanzar."
+            href="https://wa.me/56955350255?text=Hola%20Vicente%2C%20recibí%20la%20cotización%20y%20quiero%20avanzar."
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 bg-[#25D366] hover:bg-[#1ebe5d] text-white font-bold px-8 py-4 rounded-xl transition-all duration-200 text-base"

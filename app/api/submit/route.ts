@@ -5,7 +5,7 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyh4a4T6fnfA8u0C6oyI
 const RESEND_API_KEY = process.env.RESEND_API_KEY!
 const NOTIFY_EMAIL   = 'vicente.torres@proppi.cl'
 const FROM_EMAIL     = 'ClickBase <notificaciones@priceguard.cl>'
-const WA_NUMBER      = '56994366697'
+const WA_NUMBER      = '56955350255'
 
 function buildEmailHtml(data: Record<string, string>) {
   const row = (label: string, value: string) => value ? `
