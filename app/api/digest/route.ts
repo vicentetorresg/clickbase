@@ -16,6 +16,9 @@ function scrollBar(pct: number) {
 }
 
 export async function GET() {
+  // Digest disabled — per-session emails are used instead
+  return NextResponse.json({ disabled: true })
+
   const since = new Date(Date.now() - 30 * 60 * 1000).toISOString()
 
   const { data: events, error } = await supabase

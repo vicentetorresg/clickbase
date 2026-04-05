@@ -24,6 +24,9 @@ export async function POST(req: Request) {
     user_agent: string | null
   }
 
+  // Wait briefly so any in-flight WA click / form events finish inserting
+  await new Promise((resolve) => setTimeout(resolve, 3000))
+
   // Query WA clicks and form submits for this session
   const { data: events } = await supabase
     .from('events')
