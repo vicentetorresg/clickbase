@@ -62,9 +62,16 @@ export default function WhatIncludes() {
             <span className="line-through text-slate-300 font-medium">$999.990 + IVA</span>{' '}
             <span className="gradient-text">$699.990 + IVA</span>
           </h2>
-          <p className="text-lg text-slate-400 max-w-xl mx-auto">
+          <p className="text-lg text-slate-400 max-w-xl mx-auto mb-6">
             Un solo pago, todo instalado. Sin sorpresas.
           </p>
+          <div className="inline-flex items-center gap-3 bg-[#25D366]/10 border border-[#25D366]/30 rounded-xl px-5 py-3">
+            <img src="/mercadopago.svg" alt="Mercado Pago" className="h-8 w-auto flex-shrink-0" />
+            <div className="text-left">
+              <p className="text-xs text-white/60">o en 3 cuotas sin interés de</p>
+              <p className="text-xl font-extrabold text-[#25D366] leading-tight">$233.330 <span className="text-sm font-normal text-white/60">+ IVA / cuota</span></p>
+            </div>
+          </div>
         </div>
 
         {/* Grid */}
