@@ -25,7 +25,7 @@ export async function GET() {
 
   if (error) {
     console.error('digest query error:', error)
-    return NextResponse.json({ success: false, error: String(error) }, { status: 500 })
+    return NextResponse.json({ success: false, error: JSON.stringify(error) }, { status: 500 })
   }
 
   // Continúa aunque no haya eventos — envía igual con totales en 0
