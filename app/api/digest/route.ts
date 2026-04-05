@@ -39,7 +39,7 @@ export async function GET() {
   const formSubmits: Record<string, number> = {}
   const scrollDepths: Record<string, number[]> = {}
 
-  for (const e of events) {
+  for (const e of (events ?? [])) {
     const src = e.source || 'desconocido'
 
     if (e.type === 'visit') {
