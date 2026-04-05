@@ -183,13 +183,12 @@ export default function Pricing() {
                 </div>
               </div>
               {plan.badgeType === 'one-time' && (
-                <div className="flex items-center gap-3 mb-3 mt-1 bg-white/5 border border-white/10 rounded-xl px-3 py-2.5">
+                <div className="flex items-center gap-3 mb-3 mt-1 bg-[#25D366]/10 border border-[#25D366]/30 rounded-xl px-4 py-3">
                   <img src="/mercadopago.svg" alt="Mercado Pago" className="h-10 w-auto flex-shrink-0" />
-                  <p className="text-xs text-white leading-tight">
-                    Hasta <span className="font-semibold">3 cuotas sin interés</span>
-                    <br />
-                    <span className="text-white/70">de </span><span className="text-white font-bold">$233.330 + IVA</span><span className="text-white/70"> / cuota</span>
-                  </p>
+                  <div>
+                    <p className="text-sm font-bold text-white leading-tight">3 cuotas sin interés</p>
+                    <p className="text-lg font-extrabold text-[#25D366] leading-tight">$233.330 <span className="text-sm font-normal text-white/70">+ IVA / cuota</span></p>
+                  </div>
                 </div>
               )}
               <p className="text-sm text-slate-400 mb-4">{plan.subtitle}</p>

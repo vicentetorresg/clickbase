@@ -404,13 +404,19 @@ export default function Embudo2() {
           </div>
 
           <div className="text-center p-6 rounded-2xl bg-gradient-to-r from-brand-purple/10 to-brand-cyan/10 border border-brand-purple/30">
+            <p className="text-slate-400 text-sm mb-2">Página + corrección de campaña + tracking completo</p>
             <div className="flex items-center justify-center gap-2 flex-wrap mb-1">
-              <span className="text-2xl font-extrabold text-white">Setup completo:</span>
               <span className="text-xl text-slate-300 line-through font-medium">$999.990 + IVA</span>
               <span className="text-2xl font-extrabold gradient-text">$699.990 + IVA</span>
               <span className="text-xs font-bold text-success bg-success/10 border border-success/25 rounded-full px-2 py-0.5">−30%</span>
             </div>
-            <p className="text-slate-400 text-sm">Pago único. Resultado garantizado en 7 días.</p>
+            <div className="flex items-center justify-center gap-3 mt-3 bg-[#25D366]/10 border border-[#25D366]/30 rounded-xl px-4 py-3">
+              <img src="/mercadopago.svg" alt="Mercado Pago" className="h-8 w-auto flex-shrink-0" />
+              <div className="text-left">
+                <p className="text-sm font-bold text-white leading-tight">3 cuotas sin interés</p>
+                <p className="text-lg font-extrabold text-[#25D366] leading-tight">$233.330 <span className="text-sm font-normal text-white/70">+ IVA / cuota</span></p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -529,7 +535,13 @@ export default function Embudo2() {
                 <span className="text-xs font-bold text-success bg-success/10 border border-success/25 rounded-full px-2 py-0.5">−30%</span>
               </div>
               <p className="text-4xl font-extrabold text-white mb-1">$699.990 <span className="text-xl font-normal text-slate-400">+ IVA</span></p>
-              <p className="text-slate-500 text-xs mb-3">Pago único</p>
+              <div className="flex items-center gap-3 mb-3 bg-[#25D366]/10 border border-[#25D366]/30 rounded-xl px-4 py-3">
+                <img src="/mercadopago.svg" alt="Mercado Pago" className="h-8 w-auto flex-shrink-0" />
+                <div>
+                  <p className="text-sm font-bold text-white leading-tight">3 cuotas sin interés</p>
+                  <p className="text-lg font-extrabold text-[#25D366] leading-tight">$233.330 <span className="text-sm font-normal text-white/70">+ IVA / cuota</span></p>
+                </div>
+              </div>
               <div className="flex items-center gap-1.5 mb-6">
                 <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse inline-block flex-shrink-0" />
                 <span className="text-xs text-amber-400 font-medium">Solo 10 cupos disponibles por mes <span className="font-normal opacity-80">(para garantizar un trabajo personalizado para tu negocio)</span></span>
