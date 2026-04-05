@@ -18,7 +18,7 @@ const SERVICIOS_DETALLE: Record<string, {
   setup: {
     nombre: 'Setup Inicial',
     tipo: 'Pago único',
-    precio: 699990,
+    precio: 799990,
     precioLista: 999990,
     sla: 'Entrega en 5–7 días hábiles desde el pago.',
     features: [
