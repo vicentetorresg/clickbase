@@ -111,29 +111,110 @@ export default function Pricing() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-14">
+        <div className="text-center mb-10">
           <span className="section-label">Planes y precios</span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mt-4 mb-6">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mt-4 mb-4">
             Transparencia total.{' '}
             <span className="gradient-text">Sin letras chicas.</span>
           </h2>
           <p className="text-lg text-slate-400 max-w-xl mx-auto">
-            Elige cómo quieres trabajar. Sin contratos forzosos ni cobros escondidos.
+            Empieza con el setup. El mantenimiento es opcional y puedes agregarlo cuando quieras.
           </p>
         </div>
 
-        {/* Pricing cards */}
-        <div className="grid lg:grid-cols-3 gap-6 lg:gap-8 items-start">
-          {plans.map((plan, index) => (
+        {/* PASO 1 — Setup */}
+        <div className="mb-4">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="flex items-center gap-2 bg-success/10 border border-success/30 rounded-full px-4 py-1.5">
+              <span className="w-5 h-5 rounded-full bg-success flex items-center justify-center text-dark text-xs font-extrabold flex-shrink-0">1</span>
+              <span className="text-sm font-bold text-success">Paso 1 — Requerido para empezar</span>
+            </div>
+          </div>
+          {(() => {
+            const plan = plans[0]
+            return (
+              <div className="pricing-highlight shadow-glow-brand rounded-2xl p-6 lg:p-8">
+                <div className="grid lg:grid-cols-2 gap-8 items-start">
+                  {/* Left: price */}
+                  <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-success/10 text-success border border-success/30">
+                        {plan.badge}
+                      </span>
+                    </div>
+                    <h3 className="text-2xl font-extrabold text-white mb-3">{plan.name}</h3>
+                    <p className="text-slate-400 text-sm mb-4">{plan.subtitle}</p>
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-base text-slate-400 line-through">{plan.originalPrice} + IVA</span>
+                      <span className="text-xs font-bold text-success bg-success/10 border border-success/25 rounded-full px-2 py-0.5">−{plan.discountPct}%</span>
+                    </div>
+                    <p className="text-5xl font-extrabold gradient-text leading-none mb-1">{plan.price}</p>
+                    <p className="text-slate-400 text-base mb-3">{plan.priceSuffix}</p>
+                    <p className="text-white font-semibold text-sm mb-4">Un solo pago, todo instalado. Sin sorpresas.</p>
+                    <div className="flex items-center gap-3 mb-5 bg-[#25D366]/10 border border-[#25D366]/30 rounded-xl px-4 py-3">
+                      <img src="/mercadopago.svg" alt="Mercado Pago" className="h-10 w-auto flex-shrink-0" />
+                      <div>
+                        <p className="text-sm text-white/60 mb-0.5">o en 12 cuotas sin interés de</p>
+                        <p className="text-xl font-extrabold text-[#25D366] leading-tight">$66.666 <span className="text-sm font-normal text-white/70">+ IVA / cuota</span></p>
+                      </div>
+                    </div>
+                    {plan.cupos && (
+                      <div className="flex items-center gap-1.5 mb-4">
+                        <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse inline-block flex-shrink-0" />
+                        <span className="text-xs text-amber-400 font-medium">Solo {plan.cupos} cupos disponibles este mes</span>
+                      </div>
+                    )}
+                    <button
+                      onClick={openModal}
+                      className="flex items-center justify-center gap-2 w-full gradient-bg text-white font-bold py-4 px-6 rounded-xl text-base transition-all duration-200 hover:opacity-90 hover:shadow-glow-purple"
+                    >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="flex-shrink-0">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+                        <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.848L.057 23.5c-.07.27.057.553.298.634.068.024.139.035.208.035.177 0 .35-.074.474-.212l5.792-5.792A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.817 9.817 0 01-5.217-1.494L3.5 22l1.703-3.2A9.78 9.78 0 012.182 12C2.182 6.572 6.572 2.182 12 2.182S21.818 6.572 21.818 12 17.428 21.818 12 21.818z" />
+                      </svg>
+                      {plan.cta}
+                    </button>
+                  </div>
+                  {/* Right: features */}
+                  <div>
+                    <p className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-4">Qué incluye</p>
+                    <ul className="space-y-3">
+                      {plan.features.map((feature, i) => (
+                        <li key={i} className="flex items-start gap-3 text-sm">
+                          <span className="flex-shrink-0 mt-0.5 text-success">✅</span>
+                          <span className="text-slate-300">{feature.text}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            )
+          })()}
+        </div>
+
+        {/* Connector */}
+        <div className="flex items-center gap-4 my-8 max-w-2xl mx-auto">
+          <div className="flex-1 h-px bg-slate-800" />
+          <div className="flex items-center gap-2 bg-brand-cyan/10 border border-brand-cyan/30 rounded-full px-4 py-1.5">
+            <span className="w-5 h-5 rounded-full bg-brand-cyan/20 border border-brand-cyan/40 flex items-center justify-center text-brand-cyan text-xs font-extrabold flex-shrink-0">2</span>
+            <span className="text-sm font-bold text-brand-cyan">Paso 2 — Mantenimiento (opcional)</span>
+          </div>
+          <div className="flex-1 h-px bg-slate-800" />
+        </div>
+        <p className="text-center text-sm text-slate-500 mb-8 -mt-4">Requiere haber completado el Setup Inicial. Cancela cuando quieras.</p>
+
+        {/* PASO 2 — Monthly plans */}
+        <div className="grid lg:grid-cols-2 gap-6 max-w-3xl mx-auto">
+          {plans.slice(1).map((plan, index) => (
             <div
               key={index}
               className={`relative rounded-2xl p-6 lg:p-8 transition-all duration-300 ${
                 plan.highlighted
-                  ? 'pricing-highlight shadow-glow-purple lg:scale-105 lg:-my-4'
+                  ? 'pricing-highlight shadow-glow-purple'
                   : 'card-dark card-dark-hover'
               }`}
             >
-              {/* Popular label */}
               {plan.popularLabel && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2">
                   <span className="gradient-bg text-white text-xs font-bold px-4 py-1.5 rounded-full whitespace-nowrap">
@@ -141,108 +222,32 @@ export default function Pricing() {
                   </span>
                 </div>
               )}
-
-              {/* Badge */}
-              <div className="mb-4">
-                <span
-                  className={`text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full ${
-                    plan.badgeType === 'one-time'
-                      ? 'bg-success/10 text-success border border-success/30'
-                      : 'bg-brand-cyan/10 text-brand-cyan border border-brand-cyan/30'
-                  }`}
-                >
+              <div className="mb-3">
+                <span className="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-brand-cyan/10 text-brand-cyan border border-brand-cyan/30">
                   {plan.badge}
                 </span>
               </div>
-
-              {/* Plan name */}
-              <h3 className="text-xl font-bold text-white mb-2">{plan.name}</h3>
-
-              {/* Disclaimer */}
-              {plan.disclaimer && (
-                <div className="mb-4 p-3 bg-dark/60 rounded-lg border border-slate-700">
-                  <p className="text-xs text-slate-400 italic">{plan.disclaimer}</p>
-                </div>
-              )}
-
-              {/* Price */}
-              {plan.badgeType === 'one-time' ? (
-                <div className="mb-4">
-                  {plan.originalPrice && (
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="text-base text-slate-400 line-through">{plan.originalPrice} + IVA</span>
-                      <span className="text-xs font-bold text-success bg-success/10 border border-success/25 rounded-full px-2 py-0.5">
-                        −{plan.discountPct}%
-                      </span>
-                    </div>
-                  )}
-                  <p className="text-5xl font-extrabold gradient-text leading-none mb-1">{plan.price}</p>
-                  <p className="text-slate-400 text-base mb-2">{plan.priceSuffix}</p>
-                  <p className="text-white font-semibold text-sm mb-3">Un solo pago, todo instalado. Sin sorpresas.</p>
-                  <div className="flex items-center gap-3 mb-3 bg-[#25D366]/10 border border-[#25D366]/30 rounded-xl px-4 py-3">
-                    <img src="/mercadopago.svg" alt="Mercado Pago" className="h-10 w-auto flex-shrink-0" />
-                    <div>
-                      <p className="text-sm text-white/60 mb-0.5">o en 12 cuotas sin interés de</p>
-                      <p className="text-xl font-extrabold text-[#25D366] leading-tight">$66.666 <span className="text-sm font-normal text-white/70">+ IVA / cuota</span></p>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <div className="mb-2">
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-3xl lg:text-4xl font-extrabold text-white">
-                      {plan.price}
-                    </span>
-                    <span className="text-slate-400 text-sm">{plan.priceSuffix}</span>
-                  </div>
-                </div>
-              )}
+              <h3 className="text-xl font-bold text-white mb-1">{plan.name}</h3>
               <p className="text-sm text-slate-400 mb-4">{plan.subtitle}</p>
-              {plan.cupos && (
-                <div className="flex items-center gap-1.5 mb-6">
-                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse inline-block flex-shrink-0" />
-                  <span className="text-xs text-amber-400 font-medium">
-                    Solo {plan.cupos} cupos disponibles este mes{' '}
-                    <span className="font-normal opacity-80">(para garantizar un trabajo personalizado para tu negocio)</span>
-                  </span>
-                </div>
-              )}
-
-              {/* Divider */}
-              <div className="h-px bg-brand-purple/20 mb-6" />
-
-              {/* Features list */}
-              <ul className="space-y-3 mb-6">
+              <div className="flex items-baseline gap-2 mb-4">
+                <span className="text-3xl lg:text-4xl font-extrabold text-white">{plan.price}</span>
+                <span className="text-slate-400 text-sm">{plan.priceSuffix}</span>
+              </div>
+              <div className="h-px bg-brand-purple/20 mb-4" />
+              <ul className="space-y-3 mb-4">
                 {plan.features.map((feature, i) => (
                   <li key={i} className="flex items-start gap-3 text-sm">
-                    <span
-                      className={`flex-shrink-0 mt-0.5 ${
-                        feature.included ? 'text-success' : 'text-slate-600'
-                      }`}
-                    >
+                    <span className={`flex-shrink-0 mt-0.5 ${feature.included ? 'text-success' : 'text-slate-600'}`}>
                       {feature.included ? '✅' : '❌'}
                     </span>
-                    <span
-                      className={feature.included ? 'text-slate-300' : 'text-slate-600'}
-                    >
-                      {feature.text}
-                    </span>
+                    <span className={feature.included ? 'text-slate-300' : 'text-slate-600'}>{feature.text}</span>
                   </li>
                 ))}
               </ul>
-
-              {/* Note */}
-              {plan.note && (
-                <p className="text-xs text-slate-500 italic mb-4">{plan.note}</p>
-              )}
-
-              {/* CTA */}
+              {plan.note && <p className="text-xs text-slate-500 italic mb-4">{plan.note}</p>}
               <button
-                onClick={() => {
-                  // GTM: dataLayer.push({ event: 'pricing_cta_click', plan: plan.name })
-                  openModal()
-                }}
-                className={`flex items-center justify-center gap-2 font-bold py-3.5 px-6 rounded-xl text-sm transition-all duration-200 ${
+                onClick={openModal}
+                className={`flex items-center justify-center gap-2 w-full font-bold py-3.5 px-6 rounded-xl text-sm transition-all duration-200 ${
                   plan.highlighted
                     ? 'gradient-bg text-white hover:opacity-90 hover:shadow-glow-purple'
                     : 'border border-brand-purple/40 text-brand-purple-light hover:border-brand-purple hover:bg-brand-purple/10'
