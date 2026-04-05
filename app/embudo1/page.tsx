@@ -40,32 +40,32 @@ const CheckIcon = () => (
 
 const testimonials = [
   {
-    initials: 'MF', name: 'Dr. Marcelo Fuentes', company: 'Centro Médico Providencia', industry: 'Clínica', color: '#7C3AED', stars: 5,
+    initials: 'M', name: 'Médico · Clínica particular', company: 'Santiago', industry: 'Salud', color: '#7C3AED', stars: 5,
     quote: 'Antes dependíamos del boca a boca. Hoy recibimos entre 4 y 6 consultas nuevas por semana desde Google. El tracking nos permite saber exactamente qué anuncio las genera.',
     result: '+5 consultas/semana',
   },
   {
-    initials: 'VR', name: 'Valentina Riquelme', company: 'VR Propiedades', industry: 'Inmobiliaria', color: '#06B6D4', stars: 5,
+    initials: 'V', name: 'Corredora de propiedades', company: 'Región Metropolitana', industry: 'Inmobiliaria', color: '#06B6D4', stars: 5,
     quote: 'Lo que más me sorprendió fue la claridad. Desde el día uno supe cuántos leads llegaban, desde qué anuncio y a qué costo. Nunca había tenido esa información.',
     result: 'Costo por lead -40%',
   },
   {
-    initials: 'JS', name: 'Jorge Salas', company: 'Salas & Asociados', industry: 'Estudio Jurídico', color: '#10B981', stars: 5,
+    initials: 'J', name: 'Socio · Estudio jurídico', company: 'Santiago', industry: 'Legal', color: '#10B981', stars: 5,
     quote: 'El setup estuvo listo en una semana. Yo solo entregué la información de mi negocio y ellos construyeron todo. La primera semana de campaña ya teníamos 3 consultas.',
     result: '3 consultas en 1ª semana',
   },
   {
-    initials: 'CP', name: 'Catalina Pérez', company: 'Estudio CP Arquitectura', industry: 'Arquitectura', color: '#F59E0B', stars: 5,
+    initials: 'C', name: 'Arquitecta · Estudio propio', company: 'Santiago', industry: 'Arquitectura', color: '#F59E0B', stars: 5,
     quote: 'Tenía miedo de "tirar plata" en publicidad sin resultados. Con el tracking instalado vi exactamente qué funcionaba y qué no. Optimizamos la campaña la semana 2 y los leads bajaron de precio a la mitad.',
     result: 'CPL -52% en 2 semanas',
   },
   {
-    initials: 'RM', name: 'Rodrigo Muñoz', company: 'Muñoz Constructora', industry: 'Construcción', color: '#EC4899', stars: 5,
+    initials: 'R', name: 'Dueño · Constructora', company: 'Región Metropolitana', industry: 'Construcción', color: '#EC4899', stars: 5,
     quote: 'Nunca había tenido presencia digital. Me armaron la página, la campaña en Google y todo el tracking en 7 días. El primer mes cerré 2 proyectos que llegaron por el anuncio.',
     result: '2 proyectos nuevos en el mes 1',
   },
   {
-    initials: 'AG', name: 'Andrea González', company: 'Centro Dental AG', industry: 'Odontología', color: '#8B5CF6', stars: 5,
+    initials: 'A', name: 'Dentista · Clínica dental', company: 'Santiago', industry: 'Salud', color: '#8B5CF6', stars: 5,
     quote: 'Antes pagaba a una agencia que no me mostraba resultados. Con ClickBase sé en tiempo real cuántas personas hacen clic, cuántas llaman y cuánto me cuesta cada paciente nuevo.',
     result: 'Visibilidad total de resultados',
   },
