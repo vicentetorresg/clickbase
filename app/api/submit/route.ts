@@ -146,12 +146,12 @@ export async function POST(request: NextRequest) {
       console.error('Email error (non-fatal):', emailErr)
     }
 
-    supabase.from('events').insert({
+    void supabase.from('events').insert({
       type: 'form_submit',
       source: data.source || '/',
       referrer: data.referrer || null,
       user_agent: request.headers.get('user-agent') || null,
-    }).then(() => {}).catch(() => {})
+    })
 
     return NextResponse.json({ success: true })
   } catch (error) {
