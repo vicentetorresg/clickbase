@@ -29,6 +29,25 @@ function getSessionStart(): number {
   }
 }
 
+function captureUtms(): Record<string, string> {
+  try {
+    const stored = sessionStorage.getItem('cb_utms')
+    if (stored) return JSON.parse(stored)
+    const params = new URLSearchParams(window.location.search)
+    const utms: Record<string, string> = {}
+    for (const key of ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']) {
+      const val = params.get(key)
+      if (val) utms[key] = val
+    }
+    if (Object.keys(utms).length > 0) {
+      sessionStorage.setItem('cb_utms', JSON.stringify(utms))
+    }
+    return utms
+  } catch {
+    return {}
+  }
+}
+
 function trackEvent(type: string, source: string, extra?: Record<string, unknown>) {
   fetch('/api/track-event', {
     method: 'POST',
@@ -53,10 +72,13 @@ export function AnalyticsTracker() {
   const summarySentRef = useRef(false)
   const entryReferrerRef = useRef<string>('')
 
+  const utmsRef = useRef<Record<string, string>>({})
+
   // Initialize session on first mount
   useEffect(() => {
     getSessionStart()
     entryReferrerRef.current = document.referrer || ''
+    utmsRef.current = captureUtms()
   }, [])
 
   // Track page visits and scroll per pathname
@@ -106,6 +128,7 @@ export function AnalyticsTracker() {
         max_scroll: maxScrollRef.current,
         duration_sec: durationSec,
         user_agent: navigator.userAgent || null,
+        utms: Object.keys(utmsRef.current).length > 0 ? utmsRef.current : null,
       }
 
       const blob = new Blob([JSON.stringify(data)], { type: 'application/json' })

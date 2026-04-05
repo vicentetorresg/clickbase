@@ -174,7 +174,12 @@ export default function Embudo2() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ type: 'wa_click', ...trackPayload }),
     }).catch(() => {})
-    window.open(WA_LINK, '_blank')
+    const isWebView = /FBAN|FBAV|Instagram|FB_IAB|FB4A|FBIOS|webview|wv/i.test(navigator.userAgent)
+    if (isWebView) {
+      window.location.href = WA_LINK
+    } else {
+      window.open(WA_LINK, '_blank')
+    }
   }
 
   return (

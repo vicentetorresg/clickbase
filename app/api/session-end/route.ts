@@ -14,6 +14,7 @@ export async function POST(req: Request) {
     max_scroll,
     duration_sec,
     user_agent,
+    utms,
   } = body as {
     session_id: string
     referrer: string | null
@@ -22,6 +23,7 @@ export async function POST(req: Request) {
     max_scroll: Record<string, number>
     duration_sec: number
     user_agent: string | null
+    utms: Record<string, string> | null
   }
 
   // Wait briefly so any in-flight WA click / form events finish inserting
@@ -37,8 +39,8 @@ export async function POST(req: Request) {
   const waClicks = events?.filter((e) => e.type === 'wa_click').length ?? 0
   const formSubmits = events?.filter((e) => e.type === 'form_submit').length ?? 0
 
-  // Skip if less than 5 seconds (bot/accidental)
-  if (duration_sec < 5) {
+  // Skip if less than 12 seconds (bot/accidental)
+  if (duration_sec < 12) {
     return NextResponse.json({ skipped: true })
   }
 
@@ -148,11 +150,25 @@ export async function POST(req: Request) {
                 </td>
               </tr>
               <tr>
-                <td style="padding:9px 0;">
+                <td style="padding:9px 0;${utms ? 'border-bottom:1px solid rgba(255,255,255,0.06);' : ''}">
                   <span style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.05em;">Entrada</span>
                   <div style="font-size:13px;font-weight:600;color:#e2e8f0;margin-top:3px;">${entry_page || '/'}</div>
                 </td>
               </tr>
+              ${utms ? `
+              <tr>
+                <td style="padding:9px 0;">
+                  <span style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.05em;">UTM / Campaña</span>
+                  <div style="font-size:13px;font-weight:600;color:#e2e8f0;margin-top:3px;">
+                    ${[
+                      utms.utm_source ? `<span style="background:rgba(124,58,237,0.2);color:#a78bfa;padding:2px 7px;border-radius:4px;font-size:12px;margin-right:4px;">${utms.utm_source}</span>` : '',
+                      utms.utm_medium ? `<span style="background:rgba(6,182,212,0.15);color:#67e8f9;padding:2px 7px;border-radius:4px;font-size:12px;margin-right:4px;">${utms.utm_medium}</span>` : '',
+                      utms.utm_campaign ? `<span style="background:rgba(245,158,11,0.15);color:#fcd34d;padding:2px 7px;border-radius:4px;font-size:12px;margin-right:4px;">${utms.utm_campaign}</span>` : '',
+                      utms.utm_content ? `<span style="background:rgba(255,255,255,0.08);color:#94a3b8;padding:2px 7px;border-radius:4px;font-size:12px;margin-right:4px;">${utms.utm_content}</span>` : '',
+                    ].filter(Boolean).join('')}
+                  </div>
+                </td>
+              </tr>` : ''}
             </table>
 
             <!-- Pages visited -->
