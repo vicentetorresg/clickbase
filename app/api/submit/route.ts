@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { supabase } from '@/lib/supabase'
 
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyh4a4T6fnfA8u0C6oyI7oBT37NSsJI6wuiyQN8tHB4hN2hnwGYlXRzCwJxFfoxDe6a/exec'
 
@@ -144,6 +145,13 @@ export async function POST(request: NextRequest) {
       // El email falló pero el lead ya quedó en Sheets — no romper el flujo
       console.error('Email error (non-fatal):', emailErr)
     }
+
+    supabase.from('events').insert({
+      type: 'form_submit',
+      source: data.source || '/',
+      referrer: data.referrer || null,
+      user_agent: request.headers.get('user-agent') || null,
+    }).then(() => {}).catch(() => {})
 
     return NextResponse.json({ success: true })
   } catch (error) {

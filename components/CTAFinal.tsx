@@ -51,7 +51,11 @@ export default function CTAFinal() {
       const res = await fetch('/api/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          source: window.location.pathname,
+          referrer: document.referrer || null,
+        }),
       })
 
       const result = await res.json()

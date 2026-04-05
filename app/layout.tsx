@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { MetaPixel } from '@/components/MetaPixel'
 import { WAModalProvider } from '@/components/WAModalProvider'
+import { AnalyticsTracker } from '@/components/AnalyticsTracker'
 import './globals.css'
 
 const inter = Inter({
@@ -56,6 +57,7 @@ export default function RootLayout({
         <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N5F5GG9S" height="0" width="0" style={{ display: 'none', visibility: 'hidden' }}></iframe></noscript>
         {/* End Google Tag Manager (noscript) */}
         <WAModalProvider>
+          <AnalyticsTracker />
           {children}
         </WAModalProvider>
         <MetaPixel />

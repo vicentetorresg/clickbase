@@ -190,6 +190,21 @@ export default function Embudo2() {
       fbq('track', 'Lead')
       sessionStorage.setItem('wa_lead_fired', '1')
     }
+    const trackPayload = {
+      source: '/embudo2',
+      referrer: document.referrer || null,
+      user_agent: navigator.userAgent || null,
+    }
+    fetch('/api/track-click', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(trackPayload),
+    }).catch(() => {})
+    fetch('/api/track-event', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type: 'wa_click', ...trackPayload }),
+    }).catch(() => {})
     window.open(WA_LINK, '_blank')
     closeModal()
   }
