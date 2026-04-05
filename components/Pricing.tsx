@@ -1,5 +1,7 @@
 'use client'
 
+import { useOpenWAModal } from '@/components/WAModalProvider'
+
 type PlanFeature = {
   text: string
   included: boolean
@@ -47,7 +49,7 @@ const plans: Plan[] = [
       { text: 'Versión responsive', included: true },
     ],
     cta: 'Quiero el setup completo',
-    ctaHref: 'https://wa.me/56994366697?text=Hola%2C%20quiero%20cotizar%20el%20Setup%20Inicial%20(web%20%2B%20campa%C3%B1a%20%2B%20tracking).%20%C2%BFMe%20pueden%20dar%20m%C3%A1s%20informaci%C3%B3n%3F',
+    ctaHref: 'https://wa.me/56955350255?text=Hola%2C%20quiero%20cotizar%20el%20Setup%20Inicial%20(web%20%2B%20campa%C3%B1a%20%2B%20tracking).%20%C2%BFMe%20pueden%20dar%20m%C3%A1s%20informaci%C3%B3n%3F',
     ctaExternal: true,
     highlighted: false,
   },
@@ -70,7 +72,7 @@ const plans: Plan[] = [
       { text: 'Desarrollos nuevos', included: false },
     ],
     cta: 'Cotizar mantención',
-    ctaHref: 'https://wa.me/56994366697?text=Hola%2C%20quiero%20cotizar%20la%20Mantenci%C3%B3n%20Base.%20%C2%BFMe%20pueden%20dar%20m%C3%A1s%20informaci%C3%B3n%3F',
+    ctaHref: 'https://wa.me/56955350255?text=Hola%2C%20quiero%20cotizar%20la%20Mantenci%C3%B3n%20Base.%20%C2%BFMe%20pueden%20dar%20m%C3%A1s%20informaci%C3%B3n%3F',
     ctaExternal: true,
     highlighted: true,
     note: 'Si necesitas reuniones o una gestión más activa, el valor mensual aumenta.',
@@ -91,13 +93,15 @@ const plans: Plan[] = [
       { text: 'Sugerencias proactivas de mejora', included: true },
     ],
     cta: 'Quiero gestión activa',
-    ctaHref: 'https://wa.me/56994366697?text=Hola%2C%20quiero%20cotizar%20el%20plan%20Gesti%C3%B3n%20Activa.%20%C2%BFMe%20pueden%20dar%20m%C3%A1s%20informaci%C3%B3n%3F',
+    ctaHref: 'https://wa.me/56955350255?text=Hola%2C%20quiero%20cotizar%20el%20plan%20Gesti%C3%B3n%20Activa.%20%C2%BFMe%20pueden%20dar%20m%C3%A1s%20informaci%C3%B3n%3F',
     ctaExternal: true,
     highlighted: false,
   },
 ]
 
 export default function Pricing() {
+  const openModal = useOpenWAModal()
+
   return (
     <section id="precios" className="py-20 lg:py-28 relative overflow-hidden">
       {/* Background */}
@@ -228,11 +232,10 @@ export default function Pricing() {
               )}
 
               {/* CTA */}
-              <a
-                href={plan.ctaHref}
-                {...(plan.ctaExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+              <button
                 onClick={() => {
                   // GTM: dataLayer.push({ event: 'pricing_cta_click', plan: plan.name })
+                  openModal()
                 }}
                 className={`flex items-center justify-center gap-2 font-bold py-3.5 px-6 rounded-xl text-sm transition-all duration-200 ${
                   plan.highlighted
@@ -245,7 +248,7 @@ export default function Pricing() {
                   <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.848L.057 23.5c-.07.27.057.553.298.634.068.024.139.035.208.035.177 0 .35-.074.474-.212l5.792-5.792A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.817 9.817 0 01-5.217-1.494L3.5 22l1.703-3.2A9.78 9.78 0 012.182 12C2.182 6.572 6.572 2.182 12 2.182S21.818 6.572 21.818 12 17.428 21.818 12 21.818z" />
                 </svg>
                 {plan.cta}
-              </a>
+              </button>
             </div>
           ))}
         </div>

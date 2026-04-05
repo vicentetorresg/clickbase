@@ -1,9 +1,10 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { fbq } from '@/lib/fbq'
+import { useOpenWAModal } from '@/components/WAModalProvider'
 
 export default function Navigation() {
+  const openModal = useOpenWAModal()
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
@@ -63,11 +64,8 @@ export default function Navigation() {
           {/* CTA Buttons */}
           <div className="flex items-center gap-2">
             {/* WhatsApp — visible en mobile y desktop */}
-            <a
-              href="https://wa.me/56994366697?text=Hola%2C%20quiero%20cotizar%20la%20p%C3%A1gina%20web%20%2B%20campa%C3%B1a%20%2B%20tracking.%20%C2%BFMe%20pueden%20dar%20m%C3%A1s%20informaci%C3%B3n%3F"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => fbq('track', 'Lead')}
+            <button
+              onClick={openModal}
               className="flex items-center gap-2 text-sm font-semibold text-[#25D366] border border-[#25D366]/30 hover:bg-[#25D366]/10 transition-colors duration-200 px-4 py-2.5 rounded-lg overflow-visible"
               aria-label="WhatsApp"
             >
@@ -76,7 +74,7 @@ export default function Navigation() {
                 <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.848L.057 23.5c-.07.27.057.553.298.634.068.024.139.035.208.035.177 0 .35-.074.474-.212l5.792-5.792A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.817 9.817 0 01-5.217-1.494L3.5 22l1.703-3.2A9.78 9.78 0 012.182 12C2.182 6.572 6.572 2.182 12 2.182S21.818 6.572 21.818 12 17.428 21.818 12 21.818z" />
               </svg>
               <span className="hidden sm:inline">Escríbenos</span>
-            </a>
+            </button>
             {/* Cotizar — solo desktop */}
             <button
               onClick={handleCTAClick}

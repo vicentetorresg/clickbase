@@ -1,7 +1,7 @@
 'use client'
 
 import Navigation from '@/components/Navigation'
-import { fbq } from '@/lib/fbq'
+import { useOpenWAModal } from '@/components/WAModalProvider'
 import Hero from '@/components/Hero'
 import TrustBar from '@/components/TrustBar'
 import Problem from '@/components/Problem'
@@ -20,6 +20,7 @@ import StickyMobileCTA from '@/components/StickyMobileCTA'
 
 function Footer() {
   const currentYear = new Date().getFullYear()
+  const openModal = useOpenWAModal()
 
   return (
     <footer className="border-t border-brand-purple/20 bg-dark-card/60">
@@ -36,11 +37,8 @@ function Footer() {
               Página web + primera campaña + tracking completo. Una base técnica lista para
               captar clientes desde el día uno.
             </p>
-            <a
-              href="https://wa.me/56955350255?text=Hola%2C%20quiero%20cotizar%20la%20p%C3%A1gina%20web%20%2B%20campa%C3%B1a%20%2B%20tracking.%20%C2%BFMe%20pueden%20dar%20m%C3%A1s%20informaci%C3%B3n%3F"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => fbq('track', 'Lead')}
+            <button
+              onClick={openModal}
               className="inline-flex items-center gap-2 text-sm text-[#25D366] hover:text-white transition-colors duration-200 font-medium"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
@@ -48,7 +46,7 @@ function Footer() {
                 <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.848L.057 23.5c-.07.27.057.553.298.634.068.024.139.035.208.035.177 0 .35-.074.474-.212l5.792-5.792A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.817 9.817 0 01-5.217-1.494L3.5 22l1.703-3.2A9.78 9.78 0 012.182 12C2.182 6.572 6.572 2.182 12 2.182S21.818 6.572 21.818 12 17.428 21.818 12 21.818z" />
               </svg>
               Escribir por WhatsApp
-            </a>
+            </button>
           </div>
 
           {/* Links column */}
@@ -137,6 +135,8 @@ function Footer() {
 }
 
 export default function Home() {
+  const openModal = useOpenWAModal()
+
   return (
     <>
       <Navigation />
@@ -168,11 +168,8 @@ export default function Home() {
               Escríbenos y en minutos te decimos si podemos ayudarte, cuánto cuesta y cuándo arrancamos.
               Sin formularios, sin reuniones previas, sin compromisos.
             </p>
-            <a
-              href="https://wa.me/56955350255?text=Hola%2C%20quiero%20cotizar%20la%20p%C3%A1gina%20web%20%2B%20campa%C3%B1a%20%2B%20tracking.%20%C2%BFMe%20pueden%20dar%20m%C3%A1s%20informaci%C3%B3n%3F"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => fbq('track', 'Lead')}
+            <button
+              onClick={openModal}
               className="inline-flex items-center gap-2.5 bg-[#25D366] hover:bg-[#1ebe5d] text-white font-bold px-9 py-4 rounded-xl text-base transition-all duration-200"
               style={{ boxShadow: '0 0 28px rgba(37, 211, 102, 0.35)' }}
             >
@@ -181,7 +178,7 @@ export default function Home() {
                 <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.848L.057 23.5c-.07.27.057.553.298.634.068.024.139.035.208.035.177 0 .35-.074.474-.212l5.792-5.792A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.817 9.817 0 01-5.217-1.494L3.5 22l1.703-3.2A9.78 9.78 0 012.182 12C2.182 6.572 6.572 2.182 12 2.182S21.818 6.572 21.818 12 17.428 21.818 12 17.428 21.818 12 21.818z" />
               </svg>
               Quiero cotizar por WhatsApp
-            </a>
+            </button>
           </div>
         </section>
 

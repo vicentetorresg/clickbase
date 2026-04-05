@@ -1,4 +1,9 @@
+'use client'
+
+import { useOpenWAModal } from '@/components/WAModalProvider'
+
 export default function AboutUs() {
+  const openModal = useOpenWAModal()
   return (
     <section id="quienes-somos" className="py-20 lg:py-28 relative overflow-hidden">
       {/* Background */}
@@ -81,14 +86,12 @@ export default function AboutUs() {
 
               {/* CTA */}
               <div className="mt-8 flex flex-col sm:flex-row gap-3">
-                <a
-                  href="https://wa.me/56994366697?text=Hola%2C%20quiero%20cotizar%20la%20p%C3%A1gina%20web%20%2B%20campa%C3%B1a%20%2B%20tracking.%20%C2%BFMe%20pueden%20dar%20m%C3%A1s%20informaci%C3%B3n%3F"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={openModal}
                   className="inline-flex items-center justify-center gap-2 gradient-bg text-white font-bold px-6 py-3.5 rounded-xl hover:opacity-90 transition-all duration-200 hover:shadow-glow-purple text-sm"
                 >
                   💬 Hablar directamente conmigo
-                </a>
+                </button>
                 <a
                   href="https://www.linkedin.com/in/vicente-t-568362118/"
                   target="_blank"

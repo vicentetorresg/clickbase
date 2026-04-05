@@ -132,14 +132,18 @@ function WAModal({ onClose, onConfirm }: { onClose: () => void; onConfirm: () =>
         className="bg-[#0f0f1a] border border-brand-purple/30 rounded-3xl p-6 sm:p-8 max-w-sm w-full text-center shadow-2xl"
         onClick={e => e.stopPropagation()}
       >
+        <p className="text-white font-extrabold text-xl leading-snug mb-5">
+          ¿Listo para aumentar tus clientes?
+        </p>
         <img
           src="/vicente.png"
           alt="Vicente Torres G."
-          className="w-20 h-20 rounded-2xl object-cover object-top mx-auto mb-4"
+          className="w-20 h-20 rounded-2xl object-cover object-top mx-auto mb-3"
         />
-        <h3 className="text-white font-extrabold text-lg mb-4">Vicente Torres G.</h3>
+        <h3 className="text-white font-extrabold text-base">Vicente Torres G.</h3>
+        <p className="text-slate-400 text-xs mb-5">CEO de Proppi</p>
         <p className="text-slate-300 text-sm leading-relaxed mb-6">
-          Al hacer click en este botón, te contactarás directamente con <strong className="text-white">Vicente Torres</strong>.
+          Escríbeme directo — te respondo en minutos y vemos si podemos ayudarte.
         </p>
         <button
           onClick={onConfirm}

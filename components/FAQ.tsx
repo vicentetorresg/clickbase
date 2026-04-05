@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { fbq } from '@/lib/fbq'
+import { useOpenWAModal } from '@/components/WAModalProvider'
 
 type FAQItem = {
   question: string
@@ -126,6 +126,7 @@ function FAQItem({
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
+  const openModal = useOpenWAModal()
 
   const handleToggle = (index: number) => {
     setOpenIndex(openIndex === index ? null : index)
@@ -173,15 +174,12 @@ export default function FAQ() {
             >
               Cotizar ahora
             </a>
-            <a
-              href="https://wa.me/56994366697?text=Hola%2C%20quiero%20cotizar%20la%20p%C3%A1gina%20web%20%2B%20campa%C3%B1a%20%2B%20tracking.%20%C2%BFMe%20pueden%20dar%20m%C3%A1s%20informaci%C3%B3n%3F"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => fbq('track', 'Lead')}
+            <button
+              onClick={openModal}
               className="flex items-center justify-center gap-2 border border-slate-600 text-white font-bold px-8 py-4 rounded-xl hover:border-slate-400 hover:bg-white/5 transition-all duration-200"
             >
               💬 Preguntar por WhatsApp
-            </a>
+            </button>
           </div>
         </div>
       </div>
