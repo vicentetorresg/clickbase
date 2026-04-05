@@ -1,15 +1,14 @@
 'use client'
 
 import { useState } from 'react'
+import { fbq } from '@/lib/fbq'
 
 const WA_LINK = 'https://wa.me/56955350255?text=Hola%2C%20vi%20la%20p%C3%A1gina%20y%20quiero%20entender%20por%20qu%C3%A9%20mis%20ads%20no%20funcionan.%20%C2%BFPueden%20ayudarme%3F'
 
-function CTAButton({ text = 'Diagnosticar mi campaña gratis', size = 'lg', full = false }: { text?: string; size?: 'lg' | 'xl'; full?: boolean }) {
+function CTAButton({ text = 'Diagnosticar mi campaña gratis', size = 'lg', full = false, onClick }: { text?: string; size?: 'lg' | 'xl'; full?: boolean; onClick?: () => void }) {
   return (
-    <a
-      href={WA_LINK}
-      target="_blank"
-      rel="noopener noreferrer"
+    <button
+      onClick={onClick}
       className={`
         gradient-bg text-white font-extrabold rounded-2xl inline-flex items-center justify-center gap-3
         hover:opacity-90 active:scale-95 transition-all duration-200 hover:shadow-glow-purple
@@ -22,7 +21,7 @@ function CTAButton({ text = 'Diagnosticar mi campaña gratis', size = 'lg', full
       <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" className="flex-shrink-0">
         <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
       </svg>
-    </a>
+    </button>
   )
 }
 
@@ -136,9 +135,68 @@ function FAQItem({ q, a }: { q: string; a: string }) {
   )
 }
 
+function WAModal({ onClose, onConfirm }: { onClose: () => void; onConfirm: () => void }) {
+  return (
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <div
+        className="bg-[#0f0f1a] border border-brand-purple/30 rounded-3xl p-6 sm:p-8 max-w-sm w-full text-center shadow-2xl"
+        onClick={e => e.stopPropagation()}
+      >
+        <p className="text-white font-extrabold text-xl leading-snug mb-5">
+          ¿Listo para aumentar tus clientes?
+        </p>
+        <img
+          src="/vicente.png"
+          alt="Vicente Torres G."
+          className="w-20 h-20 rounded-2xl object-cover object-top mx-auto mb-3"
+        />
+        <h3 className="text-white font-extrabold text-base">Vicente Torres G.</h3>
+        <p className="text-slate-400 text-xs mb-5">CEO de Proppi</p>
+        <p className="text-slate-300 text-sm leading-relaxed mb-6">
+          Escríbeme directo — te respondo en minutos y vemos si podemos ayudarte.
+        </p>
+        <button
+          onClick={onConfirm}
+          className="w-full flex items-center justify-center gap-3 bg-[#25D366] hover:bg-[#1ebe5d] text-white font-extrabold text-base px-6 py-4 rounded-2xl transition-colors duration-200"
+        >
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+            <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.848L.057 23.5c-.07.27.057.553.298.634.068.024.139.035.208.035.177 0 .35-.074.474-.212l5.792-5.792A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.817 9.817 0 01-5.217-1.494L3.5 22l1.703-3.2A9.78 9.78 0 012.182 12C2.182 6.572 6.572 2.182 12 2.182S21.818 6.572 21.818 12 17.428 21.818 12 21.818z" />
+          </svg>
+          Ir a WhatsApp
+        </button>
+        <button
+          onClick={onClose}
+          className="mt-3 text-xs text-slate-600 hover:text-slate-400 transition-colors duration-200"
+        >
+          Cancelar
+        </button>
+      </div>
+    </div>
+  )
+}
+
 export default function Embudo2() {
+  const [showModal, setShowModal] = useState(false)
+
+  function openModal() { setShowModal(true) }
+  function closeModal() { setShowModal(false) }
+
+  function handleGoToWA() {
+    if (!sessionStorage.getItem('wa_lead_fired')) {
+      fbq('track', 'Lead')
+      sessionStorage.setItem('wa_lead_fired', '1')
+    }
+    window.open(WA_LINK, '_blank')
+    closeModal()
+  }
+
   return (
     <div className="min-h-screen bg-dark text-white">
+      {showModal && <WAModal onClose={closeModal} onConfirm={handleGoToWA} />}
 
       {/* ── HEADER ──────────────────────────────────────────── */}
       <header className="sticky top-0 z-50 border-b border-brand-purple/20 bg-dark/90 backdrop-blur-lg">
@@ -147,19 +205,17 @@ export default function Embudo2() {
             <span className="text-xl">⚡</span>
             <span className="text-lg font-extrabold gradient-text">ClickBase</span>
           </a>
-          <a
-            href={WA_LINK}
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={openModal}
             className="flex items-center gap-2 text-sm font-bold text-[#25D366] border border-[#25D366]/30 hover:bg-[#25D366]/10 transition-colors duration-200 px-4 py-2 rounded-lg"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
               <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
               <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.848L.057 23.5c-.07.27.057.553.298.634.068.024.139.035.208.035.177 0 .35-.074.474-.212l5.792-5.792A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.817 9.817 0 01-5.217-1.494L3.5 22l1.703-3.2A9.78 9.78 0 012.182 12C2.182 6.572 6.572 2.182 12 2.182S21.818 6.572 21.818 12 17.428 21.818 12 21.818z" />
             </svg>
-            <span className="hidden sm:inline">+56 9 9436 6697</span>
+            <span className="hidden sm:inline">+56 9 5535 0255</span>
             <span className="sm:hidden">WhatsApp</span>
-          </a>
+          </button>
         </div>
       </header>
 
@@ -176,7 +232,7 @@ export default function Embudo2() {
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-red-500/30 bg-red-500/10 text-sm font-medium text-red-400 mb-8">
             <span>🚨</span>
-            El problema no son tus ads. Es lo que hay debajo.
+            El 80% de los negocios falla por la misma razón técnica
           </div>
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight mb-6">
@@ -187,12 +243,11 @@ export default function Embudo2() {
           </h1>
 
           <p className="text-lg sm:text-xl text-slate-400 mb-10 max-w-2xl mx-auto leading-relaxed">
-            El 80% de los negocios que fracasan con Google Ads o Meta Ads tienen el mismo problema:
-            tracking roto, landing que no convierte, o ambos. Te arreglamos la base y relanzamos.
+            La mayoría de las campañas que no funcionan tienen tracking roto, landing sin estructura, o ambos. En 7 días te lo arreglamos y relanzamos.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
-            <CTAButton text="Diagnosticar mi campaña gratis" size="xl" />
+            <CTAButton text="Diagnosticar mi campaña gratis" size="xl" onClick={openModal} />
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-3 text-xs">
@@ -312,7 +367,7 @@ export default function Embudo2() {
           </div>
 
           <div className="text-center mt-8">
-            <CTAButton text="Quiero la versión correcta" size="xl" />
+            <CTAButton text="Quiero la versión correcta" size="xl" onClick={openModal} />
           </div>
         </div>
       </section>
@@ -436,14 +491,12 @@ export default function Embudo2() {
                 <strong className="text-white">cada setup pasa por mis manos antes de entregarse.</strong>{' '}
                 Eso incluye revisar que el tracking esté 100% correcto.
               </p>
-              <a
-                href={WA_LINK}
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={openModal}
                 className="inline-flex items-center gap-2 gradient-bg text-white font-bold px-6 py-3 rounded-xl hover:opacity-90 transition-all duration-200 text-sm"
               >
                 💬 Hablar directamente conmigo
-              </a>
+              </button>
             </div>
           </div>
         </div>
@@ -452,7 +505,7 @@ export default function Embudo2() {
       {/* ── CTA INTERMEDIA ──────────────────────────────────── */}
       <div className="py-10 text-center px-4">
         <p className="text-slate-400 text-sm mb-4">Escríbenos y revisamos tu campaña actual sin costo</p>
-        <CTAButton text="Quiero que revisen mi campaña" size="xl" />
+        <CTAButton text="Quiero que revisen mi campaña" size="xl" onClick={openModal} />
       </div>
 
       {/* ── HOW IT WORKS ────────────────────────────────────── */}
@@ -488,7 +541,7 @@ export default function Embudo2() {
           </div>
 
           <div className="text-center mt-12">
-            <CTAButton text="Empezar con el diagnóstico" size="xl" />
+            <CTAButton text="Empezar con el diagnóstico" size="xl" onClick={openModal} />
           </div>
         </div>
       </section>
@@ -526,7 +579,7 @@ export default function Embudo2() {
                   </li>
                 ))}
               </ul>
-              <CTAButton text="Corregir mi setup" full />
+              <CTAButton text="Corregir mi setup" full onClick={openModal} />
             </div>
 
             <div className="card-dark rounded-2xl p-8">
@@ -540,14 +593,12 @@ export default function Embudo2() {
                   </li>
                 ))}
               </ul>
-              <a
-                href={WA_LINK}
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={openModal}
                 className="w-full border border-slate-600 text-white font-bold px-6 py-3.5 rounded-xl text-sm hover:border-slate-400 hover:bg-white/5 transition-all duration-200 flex items-center justify-center"
               >
                 Consultar mantención
-              </a>
+              </button>
             </div>
           </div>
 
@@ -575,7 +626,7 @@ export default function Embudo2() {
       <div className="py-12 gradient-bg text-center px-4">
         <p className="text-white/80 text-sm mb-2">Diagnóstico gratuito — Sin compromiso</p>
         <h3 className="text-2xl sm:text-3xl font-extrabold text-white mb-6">Escríbenos y te decimos qué está fallando</h3>
-        <CTAButton text="Quiero el diagnóstico gratis" size="xl" />
+        <CTAButton text="Quiero el diagnóstico gratis" size="xl" onClick={openModal} />
       </div>
 
       {/* ── TESTIMONIALS 2 ──────────────────────────────────── */}
@@ -670,14 +721,14 @@ export default function Embudo2() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
-            <CTAButton text="Quiero empezar ahora" size="xl" />
+            <CTAButton text="Quiero empezar ahora" size="xl" onClick={openModal} />
           </div>
 
           <p className="text-slate-500 text-sm">
             O escríbenos directo al{' '}
-            <a href={WA_LINK} target="_blank" rel="noopener noreferrer" className="text-[#25D366] hover:underline">
-              +56 9 9436 6697
-            </a>
+            <button onClick={openModal} className="text-[#25D366] hover:underline">
+              +56 9 5535 0255
+            </button>
           </p>
         </div>
       </section>

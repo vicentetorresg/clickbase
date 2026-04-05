@@ -219,7 +219,7 @@ export default function Embudo1() {
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-brand-purple/40 bg-brand-purple/10 text-sm font-medium text-brand-purple-light mb-8">
             <span className="w-2 h-2 rounded-full bg-success animate-pulse inline-block" />
-            Más de 40 negocios ya tienen su base digital lista
+            Setup en 7 días · Más de 40 negocios en Chile
           </div>
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight mb-6">
