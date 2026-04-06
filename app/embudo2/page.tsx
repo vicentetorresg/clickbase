@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { fbq } from '@/lib/fbq'
 // WAModal removed — buttons go directly to WhatsApp
 
@@ -160,7 +160,59 @@ function FAQItem({ q, a }: { q: string; a: string }) {
   )
 }
 
+function SafariModal({ onClose }: { onClose: () => void }) {
+  return (
+    <div
+      className="fixed inset-0 z-[100] flex items-end justify-center p-4"
+      style={{ background: 'rgba(0,0,0,0.7)' }}
+      onClick={onClose}
+    >
+      <div
+        className="w-full max-w-sm rounded-2xl p-6 text-center"
+        style={{ background: '#1a1a2e', border: '1px solid rgba(37,211,102,0.3)' }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="text-3xl mb-3">📱</div>
+        <h3 className="text-white font-bold text-lg mb-2">Abre en tu navegador para contactarnos</h3>
+        <p className="text-slate-400 text-sm mb-5 leading-relaxed">
+          Esta app no permite abrir WhatsApp directamente. Sigue estos pasos:
+        </p>
+        <div className="bg-dark rounded-xl p-4 mb-5 text-left space-y-3">
+          <div className="flex items-center gap-3">
+            <span className="text-xl">1️⃣</span>
+            <span className="text-slate-300 text-sm">Toca <strong className="text-white">···</strong> en la esquina superior derecha</span>
+          </div>
+          <div className="flex items-center gap-3">
+            <span className="text-xl">2️⃣</span>
+            <span className="text-slate-300 text-sm">Selecciona <strong className="text-white">"Abrir en navegador"</strong> o <strong className="text-white">"Abrir en Safari"</strong></span>
+          </div>
+          <div className="flex items-center gap-3">
+            <span className="text-xl">3️⃣</span>
+            <span className="text-slate-300 text-sm">Toca el botón verde de WhatsApp</span>
+          </div>
+        </div>
+        <button
+          onClick={onClose}
+          className="w-full py-3 rounded-xl text-slate-400 text-sm border border-slate-700"
+        >
+          Cerrar
+        </button>
+      </div>
+    </div>
+  )
+}
+
 export default function Embudo2() {
+  const [showSafariModal, setShowSafariModal] = useState(false)
+  const [isMetaWebView, setIsMetaWebView] = useState(false)
+
+  useEffect(() => {
+    const ua = navigator.userAgent
+    if (/FBAN|FBAV|Instagram|Messenger|FB_IAB|FB4A|FBIOS/i.test(ua)) {
+      setIsMetaWebView(true)
+    }
+  }, [])
+
   function openModal() {
     fbq('track', 'Lead')
     const trackPayload = {
@@ -178,6 +230,10 @@ export default function Embudo2() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ type: 'wa_click', ...trackPayload }),
     }).catch(() => {})
+    if (isMetaWebView) {
+      setShowSafariModal(true)
+      return
+    }
     window.location.href = 'whatsapp://send?phone=56955350255&text=Hola%2C%20quiero%20aumentar%20los%20clientes%20de%20mi%20empresa%20y%20necesito%20ayuda'
     setTimeout(() => {
       window.location.href = 'https://wa.me/56955350255?text=Hola%2C%20quiero%20aumentar%20los%20clientes%20de%20mi%20empresa%20y%20necesito%20ayuda'
@@ -186,6 +242,7 @@ export default function Embudo2() {
 
   return (
     <div className="min-h-screen bg-dark text-white">
+      {showSafariModal && <SafariModal onClose={() => setShowSafariModal(false)} />}
 
       {/* ── HEADER ──────────────────────────────────────────── */}
       <header className="sticky top-0 z-50 border-b border-brand-purple/20 bg-dark/90 backdrop-blur-lg">
