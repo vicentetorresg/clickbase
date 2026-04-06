@@ -1,6 +1,10 @@
 import { NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
-import { sendMailViaAppsScript } from '@/lib/apps-script-mail'
+import { Resend } from 'resend'
+
+const resend = new Resend(process.env.RESEND_API_KEY)
+const FROM_EMAIL = 'ClickBase <notificaciones@priceguard.cl>'
+const CC_EMAIL = 'vicente.torres@proppi.cl'
 
 function getDeviceLabel(input?: string | null) {
   if (!input) return 'Desconocido'
@@ -64,7 +68,6 @@ export async function POST(req: Request) {
     </tr>` : ''
 
   const subject = `ClickBase | ${safeTitle} | ${source || '/'} | ${now}`
-  const body = `Interaccion: CTA abierto\nBoton: ${safeTitle}\nPagina: ${source || '/'}\nFuente: ${sourceLabel}\nDispositivo: ${deviceLabel}${utmSummary ? `\nCampana UTM: ${utmSummary}` : ''}\nHora: ${now}`
   const html = `
     <!DOCTYPE html>
     <html lang="es">
@@ -127,7 +130,12 @@ export async function POST(req: Request) {
     })
   } catch (_) {}
 
-  await sendMailViaAppsScript({ subject, body, html }).catch(() => {})
+  resend.emails.send({
+    from: FROM_EMAIL,
+    to: CC_EMAIL,
+    subject,
+    html,
+  }).catch(() => {})
 
   return NextResponse.json({ ok: true })
 }
