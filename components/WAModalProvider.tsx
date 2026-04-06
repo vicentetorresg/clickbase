@@ -64,12 +64,13 @@ function LeadModal({ title, onClose, onAbandon }: { title: string; onClose: () =
 
   return (
     <div
-      className="fixed inset-0 z-[60] flex items-center justify-center p-4 pb-28 sm:pb-4"
+      className="fixed inset-0 z-[60] overflow-y-auto"
       style={{ background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(4px)' }}
       onClick={handleClose}
     >
+      <div className="flex min-h-full items-center justify-center p-4 pt-20 pb-28 sm:pt-4 sm:pb-4">
       <div
-        className="relative bg-[#12122A] border border-[rgba(124,58,237,0.3)] rounded-2xl p-6 w-full max-w-sm max-h-[90vh] overflow-y-auto"
+        className="relative bg-[#12122A] border border-[rgba(124,58,237,0.3)] rounded-2xl p-6 w-full max-w-sm"
         onClick={e => e.stopPropagation()}
       >
         <div className="absolute top-0 left-0 right-0 h-1.5 rounded-t-2xl" style={{ background: 'linear-gradient(90deg, #7C3AED, #06B6D4, #25D366)' }} />
@@ -153,6 +154,7 @@ function LeadModal({ title, onClose, onAbandon }: { title: string; onClose: () =
             </div>
           </div>
         )}
+      </div>
       </div>
     </div>
   )

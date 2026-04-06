@@ -186,7 +186,7 @@ export default function Embudo2() {
       </div>
 
       {/* ── HERO ────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden pt-8 pb-6 sm:pt-16 sm:pb-12">
+      <section className="relative overflow-hidden pt-8 pb-4 sm:pt-16 sm:pb-12">
         <div className="absolute top-0 left-1/4 w-80 h-80 rounded-full opacity-15 blur-3xl pointer-events-none" style={{ background: 'radial-gradient(circle, #7C3AED 0%, transparent 70%)' }} />
 
         <div className="relative max-w-2xl mx-auto px-4 sm:px-6 text-center">
@@ -230,7 +230,7 @@ export default function Embudo2() {
       </section>
 
       {/* ── PROBLEM DIAGNOSIS ───────────────────────────────── */}
-      <section className="py-20 lg:py-28 relative overflow-hidden">
+      <section className="py-10 sm:py-20 lg:py-28 relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at 30% 50%, rgba(124,58,237,0.05) 0%, transparent 60%)' }} />
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
