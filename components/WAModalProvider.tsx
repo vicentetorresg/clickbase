@@ -109,7 +109,6 @@ function LeadModal({ title, onClose, onAbandon }: { title: string; onClose: () =
                 { icon: '🌐', label: 'Landing de alta conversión', desc: 'Diseñada para convertir visitas en contactos' },
                 { icon: '📣', label: 'Campaña en Google Ads o Meta Ads', desc: 'Configurada y lista para atraer clientes' },
                 { icon: '📊', label: 'Pixel + GTM + tracking completo', desc: 'Saber qué funciona y optimizar en tiempo real' },
-                { icon: '💬', label: 'Leads directo a tu WhatsApp', desc: 'Sin formularios perdidos ni correos sin leer' },
               ].map(item => (
                 <li key={item.label} className="flex items-start gap-2.5 text-sm text-slate-300">
                   <span className="text-base leading-none mt-0.5">{item.icon}</span>
