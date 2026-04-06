@@ -47,11 +47,12 @@ export async function POST(req: Request) {
   const deviceLabel = getDeviceLabel(effectiveUserAgent)
 
   const hasUtms = utm_source || utm_medium || utm_campaign || utm_content
+  const utmSummary = [utm_campaign, utm_source, utm_medium, utm_content].filter(Boolean).join(' · ')
 
   const utmRow = hasUtms ? `
     <tr>
       <td style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06);">
-        <span style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.05em;">Campaña</span>
+        <span style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.05em;">Campana UTM</span>
         <div style="margin-top:5px;display:flex;flex-wrap:wrap;gap:4px;">
           ${utm_source ? `<span style="background:rgba(124,58,237,0.2);color:#a78bfa;padding:2px 8px;border-radius:4px;font-size:12px;">${utm_source}</span>` : ''}
           ${utm_medium ? `<span style="background:rgba(6,182,212,0.15);color:#67e8f9;padding:2px 8px;border-radius:4px;font-size:12px;">${utm_medium}</span>` : ''}
@@ -62,7 +63,7 @@ export async function POST(req: Request) {
     </tr>` : ''
 
   const subject = `ClickBase | ${safeTitle} | ${source || '/'} | ${now}`
-  const body = `Interaccion: CTA abierto\nBoton: ${safeTitle}\nPagina: ${source || '/'}\nFuente: ${sourceLabel}\nDispositivo: ${deviceLabel}\nHora: ${now}`
+  const body = `Interaccion: CTA abierto\nBoton: ${safeTitle}\nPagina: ${source || '/'}\nFuente: ${sourceLabel}\nDispositivo: ${deviceLabel}${utmSummary ? `\nCampana UTM: ${utmSummary}` : ''}\nHora: ${now}`
   const html = `
     <!DOCTYPE html>
     <html lang="es">

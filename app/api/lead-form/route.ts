@@ -24,8 +24,8 @@ export async function POST(req: Request) {
   const body = [
     `Nombre: ${name}`,
     `Teléfono: ${phone}`,
-    `Rubro: ${rubro || '—'}`,
-    `Inversión en publicidad: ${budget || '—'}`,
+    rubro ? `Rubro: ${rubro}` : '',
+    budget ? `Inversión en publicidad: ${budget}` : '',
     `Fuente: ${source || '/'}`,
     `Dispositivo: ${deviceLabel || '—'}`,
     utm_campaign || utm_source
@@ -62,18 +62,18 @@ export async function POST(req: Request) {
                   <div style="font-size:16px;font-weight:800;color:#0f766e;margin-top:4px;">${phone}</div>
                 </td>
               </tr>
-              <tr>
+              ${rubro ? `<tr>
                 <td style="padding:16px 18px;border-bottom:1px solid #e2e8f0;">
                   <span style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Rubro</span>
-                  <div style="font-size:14px;font-weight:700;color:#0f172a;margin-top:4px;">${rubro || '—'}</div>
+                  <div style="font-size:14px;font-weight:700;color:#0f172a;margin-top:4px;">${rubro}</div>
                 </td>
-              </tr>
-              <tr>
+              </tr>` : ''}
+              ${budget ? `<tr>
                 <td style="padding:16px 18px;border-bottom:1px solid #e2e8f0;">
                   <span style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Inversion en publicidad</span>
-                  <div style="font-size:14px;font-weight:700;color:#0f172a;margin-top:4px;">${budget || '—'}</div>
+                  <div style="font-size:14px;font-weight:700;color:#0f172a;margin-top:4px;">${budget}</div>
                 </td>
-              </tr>
+              </tr>` : ''}
               <tr>
                 <td style="padding:16px 18px;border-bottom:1px solid #e2e8f0;">
                   <span style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;">Fuente</span>

@@ -43,10 +43,16 @@ function LeadModal({ source, onClose }: { source: string; onClose: () => void })
     setError('')
     setLoading(true)
     try {
+      let utms: Record<string, string> = {}
+      try {
+        const stored = sessionStorage.getItem('cb_utms')
+        if (stored) utms = JSON.parse(stored)
+      } catch {}
+
       const res = await fetch('/api/lead-form', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, phone, source }),
+        body: JSON.stringify({ name, phone, source, ...utms }),
       })
       if (!res.ok) throw new Error()
       fbq('track', 'Lead')
