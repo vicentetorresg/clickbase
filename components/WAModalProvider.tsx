@@ -68,7 +68,7 @@ function LeadModal({ title, onClose, onAbandon }: { title: string; onClose: () =
       style={{ background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(4px)' }}
       onClick={handleClose}
     >
-      <div className="flex min-h-full items-center justify-center p-4 pt-20 pb-28 sm:pt-4 sm:pb-4">
+      <div className="flex min-h-full items-center justify-center p-4">
       <div
         className="relative bg-[#12122A] border border-[rgba(124,58,237,0.3)] rounded-2xl p-6 w-full max-w-sm"
         onClick={e => e.stopPropagation()}
