@@ -1,7 +1,11 @@
 import { NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
 import { insertLead } from '@/lib/leads'
-import { sendMailViaAppsScript } from '@/lib/apps-script-mail'
+import { Resend } from 'resend'
+
+const resend = new Resend(process.env.RESEND_API_KEY)
+const FROM_EMAIL = 'ClickBase <notificaciones@priceguard.cl>'
+const CC_EMAIL = 'vicente.torres@proppi.cl'
 
 function getDeviceLabel(input?: string | null) {
   if (!input) return null
@@ -21,18 +25,6 @@ export async function POST(req: Request) {
   const requestUserAgent = user_agent || req.headers.get('user-agent')
   const deviceLabel = getDeviceLabel(device || requestUserAgent)
   const subject = `ClickBase | Nuevo lead | ${name} | ${phone}`
-  const body = [
-    `Nombre: ${name}`,
-    `Teléfono: ${phone}`,
-    rubro ? `Rubro: ${rubro}` : '',
-    budget ? `Inversión en publicidad: ${budget}` : '',
-    `Fuente: ${source || '/'}`,
-    `Dispositivo: ${deviceLabel || '—'}`,
-    utm_campaign || utm_source
-      ? `UTM: ${[utm_campaign, utm_source, utm_medium, utm_content].filter(Boolean).join(' · ')}`
-      : '',
-    `Hora: ${now}`,
-  ].filter(Boolean).join('\n')
   const html = `
       <!DOCTYPE html>
       <html lang="es">
@@ -126,8 +118,13 @@ export async function POST(req: Request) {
     user_agent: req.headers.get('user-agent') || null,
   })
 
-  sendMailViaAppsScript({ subject, body, html }).catch((error) => {
-    console.error('Apps Script lead email error (non-fatal):', error)
+  resend.emails.send({
+    from: FROM_EMAIL,
+    to: CC_EMAIL,
+    subject,
+    html,
+  }).catch((error) => {
+    console.error('Resend lead email error (non-fatal):', error)
   })
 
   return NextResponse.json({ ok: true })
