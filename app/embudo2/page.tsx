@@ -349,7 +349,7 @@ export default function Embudo2() {
       <div className="bg-brand-purple/20 border-b border-brand-purple/30 text-white text-center py-2 px-4 text-xs font-semibold">
         <span className="inline-flex items-center gap-2">
           <span className="w-1.5 h-1.5 rounded-full bg-success animate-pulse inline-block" />
-          Solo 10 cupos disponibles este mes — <span className="text-brand-purple-light">3 ya reservados esta semana</span>
+          Solo 10 cupos disponibles este mes
         </span>
       </div>
 

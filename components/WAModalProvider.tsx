@@ -24,7 +24,6 @@ const Spinner = () => (
 )
 
 function LeadModal({ title, onClose, onAbandon }: { title: string; onClose: () => void; onAbandon: () => void }) {
-  const [step, setStep] = useState<0 | 1>(0)
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [sent, setSent] = useState(false)
@@ -70,7 +69,7 @@ function LeadModal({ title, onClose, onAbandon }: { title: string; onClose: () =
       onClick={handleClose}
     >
       <div
-        className="relative bg-[#12122A] border border-[rgba(124,58,237,0.3)] rounded-2xl p-6 w-full max-w-sm"
+        className="relative bg-[#12122A] border border-[rgba(124,58,237,0.3)] rounded-2xl p-6 w-full max-w-sm max-h-[90vh] overflow-y-auto"
         onClick={e => e.stopPropagation()}
       >
         {/* Header gradiente */}
@@ -87,9 +86,9 @@ function LeadModal({ title, onClose, onAbandon }: { title: string; onClose: () =
             <p className="text-slate-300 text-sm mb-1">Te escribimos por WhatsApp <strong className="text-white">hoy mismo</strong>.</p>
             <p className="text-slate-500 text-xs mt-2">Revisa tu WhatsApp en los próximos minutos.</p>
           </div>
-        ) : step === 0 ? (
-          /* Paso 1: qué es ClickBase */
+        ) : (
           <div className="pt-3">
+            {/* Explicación */}
             <div className="flex items-center justify-center gap-2 mb-3">
               <span className="text-lg">⚡</span>
               <span className="text-xs font-bold text-[#A855F7] uppercase tracking-widest">¿Qué es ClickBase?</span>
@@ -120,60 +119,44 @@ function LeadModal({ title, onClose, onAbandon }: { title: string; onClose: () =
               ))}
             </ul>
 
+            {/* Formulario */}
             <div className="border-t border-[rgba(124,58,237,0.2)] pt-4">
-              <p className="text-center text-white font-bold text-base mb-1">¿Estás listo para conseguir más clientes?</p>
-              <p className="text-center text-slate-400 text-xs mb-3">Cuéntanos de tu negocio — sin compromiso.</p>
-              <button
-                onClick={() => setStep(1)}
-                className="btn-cta w-full inline-flex items-center justify-center gap-2 font-bold py-3.5 rounded-xl text-white transition-all duration-200"
-                style={{ background: 'linear-gradient(135deg, #1DA851, #25D366)', boxShadow: '0 0 24px rgba(37,211,102,0.4)' }}
-              >
-                Quiero más clientes →
-              </button>
-              <p className="text-center text-slate-600 text-xs mt-2">Sin compromiso · Cotización gratis</p>
+              <p className="text-center text-white font-bold text-xl mb-1">¿Te interesa? Déjanos tus datos</p>
+              <p className="text-center text-slate-200 text-xs mb-3">Te contactamos hoy por WhatsApp — sin compromiso.</p>
+              <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+                <input
+                  required
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+                  name="name"
+                  placeholder="Tu nombre"
+                  autoComplete="name"
+                  className="bg-[#1a1a3a] border border-slate-700 rounded-xl px-4 py-3 text-white text-sm placeholder-slate-300 focus:outline-none focus:border-[rgba(124,58,237,0.6)]"
+                  style={{ fontSize: '16px' }}
+                />
+                <input
+                  required
+                  value={phone}
+                  onChange={e => setPhone(e.target.value)}
+                  name="tel"
+                  placeholder="Ej: +56 9 1234 5678"
+                  type="tel"
+                  autoComplete="tel"
+                  className="bg-[#1a1a3a] border border-slate-700 rounded-xl px-4 py-3 text-white text-sm placeholder-slate-300 focus:outline-none focus:border-[rgba(124,58,237,0.6)]"
+                  style={{ fontSize: '16px' }}
+                />
+                {error && <p className="text-red-400 text-xs -mt-1">{error}</p>}
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="btn-cta w-full inline-flex items-center justify-center gap-2 font-bold py-3.5 rounded-xl text-white transition-all duration-200 disabled:opacity-60 mt-1"
+                  style={{ background: 'linear-gradient(135deg, #1DA851, #25D366)', boxShadow: '0 0 24px rgba(37,211,102,0.4)' }}
+                >
+                  {loading ? <><Spinner /> Enviando...</> : <><span>Quiero más clientes</span> <WAIcon /></>}
+                </button>
+                <p className="text-center text-slate-600 text-xs -mt-1">🔒 Sin compromisos · Respuesta hoy</p>
+              </form>
             </div>
-          </div>
-        ) : (
-          /* Paso 2: formulario */
-          <div className="pt-3">
-            <button onClick={() => setStep(0)} className="flex items-center gap-1 text-slate-500 hover:text-slate-300 text-xs mb-3 transition-colors">
-              ← Volver
-            </button>
-            <h3 className="text-white font-bold text-xl mb-1 text-center">Déjanos tus datos</h3>
-            <p className="text-slate-400 text-sm mb-4 text-center">Te contactamos hoy por WhatsApp.</p>
-            <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-              <input
-                required
-                value={name}
-                onChange={e => setName(e.target.value)}
-                name="name"
-                placeholder="Tu nombre"
-                autoComplete="name"
-                className="bg-[#1a1a3a] border border-slate-700 rounded-xl px-4 py-3 text-white text-sm placeholder-slate-500 focus:outline-none focus:border-[rgba(124,58,237,0.6)]"
-                style={{ fontSize: '16px' }}
-              />
-              <input
-                required
-                value={phone}
-                onChange={e => setPhone(e.target.value)}
-                name="tel"
-                placeholder="Ej: +56 9 1234 5678"
-                type="tel"
-                autoComplete="tel"
-                className="bg-[#1a1a3a] border border-slate-700 rounded-xl px-4 py-3 text-white text-sm placeholder-slate-500 focus:outline-none focus:border-[rgba(124,58,237,0.6)]"
-                style={{ fontSize: '16px' }}
-              />
-              {error && <p className="text-red-400 text-xs -mt-1">{error}</p>}
-              <button
-                type="submit"
-                disabled={loading}
-                className="btn-cta w-full inline-flex items-center justify-center gap-2 font-bold py-3.5 rounded-xl text-white transition-all duration-200 disabled:opacity-60 mt-1"
-                style={{ background: 'linear-gradient(135deg, #1DA851, #25D366)', boxShadow: '0 0 24px rgba(37,211,102,0.4)' }}
-              >
-                {loading ? <><Spinner /> Enviando...</> : <><span>Quiero más clientes</span> <WAIcon /></>}
-              </button>
-              <p className="text-center text-slate-600 text-xs -mt-1">🔒 Sin compromisos · Respuesta hoy</p>
-            </form>
           </div>
         )}
       </div>
