@@ -1,11 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { fbq } from '@/lib/fbq'
 // WAModal removed — buttons go directly to WhatsApp
 
 const WA_LINK = 'https://wa.me/56955350255?text=Hola%2C%20quiero%20aumentar%20los%20clientes%20de%20mi%20empresa%20y%20necesito%20ayuda'
-const WA_LINK_APP = 'whatsapp://send?phone=56955350255&text=Hola%2C%20quiero%20aumentar%20los%20clientes%20de%20mi%20empresa%20y%20necesito%20ayuda'
+const WA_INTENT = 'intent://send?phone=56955350255&text=Hola%2C%20quiero%20aumentar%20los%20clientes%20de%20mi%20empresa%20y%20necesito%20ayuda#Intent;scheme=whatsapp;package=com.whatsapp;end'
 
 const WAIcon = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className="flex-shrink-0">
@@ -14,10 +14,10 @@ const WAIcon = () => (
   </svg>
 )
 
-function WAButton({ text = 'Escribir por WhatsApp', full = false, onClick }: { text?: string; full?: boolean; onClick?: () => void }) {
+function WAButton({ text = 'Escribir por WhatsApp', full = false, onClick, href }: { text?: string; full?: boolean; onClick?: () => void; href: string }) {
   return (
     <a
-      href={WA_LINK}
+      href={href}
       onClick={onClick}
       className={`inline-flex items-center justify-center gap-2.5 bg-[#25D366] hover:bg-[#1ebe5d] text-white font-bold px-9 py-4 rounded-xl text-base transition-all duration-200 active:scale-95 no-underline ${full ? 'w-full' : ''}`}
       style={{ boxShadow: '0 0 28px rgba(37, 211, 102, 0.35)' }}
@@ -114,12 +114,12 @@ const faqs = [
   },
 ]
 
-function StickyWACTA({ onClick }: { onClick: () => void }) {
+function StickyWACTA({ onClick, href }: { onClick: () => void; href: string }) {
   return (
     <div className="md:hidden fixed bottom-0 left-0 right-0 z-50" style={{ background: 'linear-gradient(to top, rgba(8,8,15,0.98) 0%, rgba(8,8,15,0.9) 100%)', borderTop: '1px solid rgba(124,58,237,0.25)' }}>
       <div className="p-3 pb-safe">
         <a
-          href={WA_LINK}
+          href={href}
           onClick={onClick}
           className="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1ebe5d] text-white font-bold py-3.5 rounded-xl text-sm transition-all duration-200 no-underline"
           style={{ boxShadow: '0 0 16px rgba(37,211,102,0.3)' }}
@@ -160,6 +160,17 @@ function FAQItem({ q, a }: { q: string; a: string }) {
 }
 
 export default function Embudo2() {
+  const [waHref, setWaHref] = useState(WA_LINK)
+
+  useEffect(() => {
+    const ua = navigator.userAgent
+    if (/Android/i.test(ua)) {
+      setWaHref(WA_INTENT)
+    } else if (/iPhone|iPad|iPod/i.test(ua)) {
+      setWaHref('whatsapp://send?phone=56955350255&text=Hola%2C%20quiero%20aumentar%20los%20clientes%20de%20mi%20empresa%20y%20necesito%20ayuda')
+    }
+  }, [])
+
   function openModal() {
     fbq('track', 'Lead')
     const trackPayload = {
@@ -190,7 +201,7 @@ export default function Embudo2() {
             <span className="text-lg font-extrabold gradient-text">ClickBase</span>
           </a>
           <a
-            href={WA_LINK}
+            href={waHref}
             onClick={openModal}
             className="flex items-center gap-2 text-sm font-bold text-[#25D366] border border-[#25D366]/30 hover:bg-[#25D366]/10 transition-colors duration-200 px-4 py-2 rounded-lg no-underline"
           >
@@ -235,7 +246,7 @@ export default function Embudo2() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
-            <WAButton text="Quiero más clientes" onClick={openModal} />
+            <WAButton text="Quiero más clientes" href={waHref} onClick={openModal} />
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-3 text-xs">
@@ -355,7 +366,7 @@ export default function Embudo2() {
           </div>
 
           <div className="text-center mt-8">
-            <WAButton text="Quiero más clientes" onClick={openModal} />
+            <WAButton text="Quiero más clientes" href={waHref} onClick={openModal} />
           </div>
         </div>
       </section>
@@ -487,7 +498,7 @@ export default function Embudo2() {
                 <strong className="text-white">cada setup pasa por mis manos antes de entregarse.</strong>{' '}
                 Eso incluye revisar que el tracking esté 100% correcto.
               </p>
-              <WAButton text="Escribir directamente" onClick={openModal} />
+              <WAButton text="Escribir directamente" href={waHref} onClick={openModal} />
             </div>
           </div>
         </div>
@@ -508,7 +519,7 @@ export default function Embudo2() {
             Escríbenos y en minutos te decimos qué está fallando, cómo lo arreglamos y cuándo arrancamos.
             Sin formularios, sin reuniones previas, sin compromisos.
           </p>
-          <WAButton text="Quiero más clientes" onClick={openModal} />
+          <WAButton text="Quiero más clientes" href={waHref} onClick={openModal} />
         </div>
       </div>
 
@@ -545,7 +556,7 @@ export default function Embudo2() {
           </div>
 
           <div className="text-center mt-12">
-            <WAButton text="Quiero más clientes" onClick={openModal} />
+            <WAButton text="Quiero más clientes" href={waHref} onClick={openModal} />
           </div>
         </div>
       </section>
@@ -589,7 +600,7 @@ export default function Embudo2() {
                   </li>
                 ))}
               </ul>
-              <WAButton text="Quiero más clientes" full onClick={openModal} />
+              <WAButton text="Quiero más clientes" href={waHref} full onClick={openModal} />
             </div>
 
             <div className="card-dark rounded-2xl p-8">
@@ -603,7 +614,7 @@ export default function Embudo2() {
                   </li>
                 ))}
               </ul>
-              <WAButton text="Consultar mantención" full onClick={openModal} />
+              <WAButton text="Consultar mantención" href={waHref} full onClick={openModal} />
             </div>
           </div>
 
@@ -642,7 +653,7 @@ export default function Embudo2() {
             Escríbenos y en minutos te decimos cómo lo arreglamos, cuánto cuesta y cuándo arrancamos.
             Sin formularios, sin reuniones previas, sin compromisos.
           </p>
-          <WAButton text="Quiero más clientes" onClick={openModal} />
+          <WAButton text="Quiero más clientes" href={waHref} onClick={openModal} />
         </div>
       </div>
 
@@ -738,12 +749,12 @@ export default function Embudo2() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
-            <WAButton text="Quiero más clientes" onClick={openModal} />
+            <WAButton text="Quiero más clientes" href={waHref} onClick={openModal} />
           </div>
 
           <p className="text-slate-500 text-sm">
             O escríbenos directo al{' '}
-            <a href={WA_LINK} onClick={openModal} className="text-[#25D366] hover:underline no-underline">
+            <a href={waHref} onClick={openModal} className="text-[#25D366] hover:underline no-underline">
               +56 9 5535 0255
             </a>
           </p>
@@ -751,7 +762,7 @@ export default function Embudo2() {
       </section>
 
       {/* ── STICKY MOBILE CTA ───────────────────────────────── */}
-      <StickyWACTA onClick={openModal} />
+      <StickyWACTA onClick={openModal} href={waHref} />
 
       {/* ── FOOTER ──────────────────────────────────────────── */}
       <footer className="border-t border-brand-purple/20 bg-dark-card/60 py-8 px-4 text-center">
