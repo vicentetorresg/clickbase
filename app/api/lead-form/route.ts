@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server'
 import { Resend } from 'resend'
 import { supabase } from '@/lib/supabase'
+import { insertLead } from '@/lib/leads'
+import { sendMailViaAppsScript } from '@/lib/apps-script-mail'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -19,21 +21,23 @@ export async function POST(req: Request) {
   const { name, email, phone, rubro, budget, source, device, user_agent, utm_source, utm_medium, utm_campaign, utm_content } = await req.json()
 
   const now = new Date().toLocaleString('es-CL', { timeZone: 'America/Santiago' })
-  const deviceLabel = getDeviceLabel(device || user_agent || req.headers.get('user-agent'))
-
-  try {
-    await supabase.from('events').insert({
-      type: 'form_submit',
-      source: source || null,
-      user_agent: req.headers.get('user-agent') || null,
-    })
-  } catch (_) {}
-
-  await resend.emails.send({
-    from: 'ClickBase <notificaciones@priceguard.cl>',
-    to: 'vicente.torres@proppi.cl',
-    subject: `🎯 Nuevo lead · ${name} · ${phone}`,
-    html: `
+  const requestUserAgent = user_agent || req.headers.get('user-agent')
+  const deviceLabel = getDeviceLabel(device || requestUserAgent)
+  const subject = `🎯 Nuevo lead · ${name} · ${phone}`
+  const body = [
+    `Nombre: ${name}`,
+    `Teléfono: ${phone}`,
+    `Correo: ${email || '—'}`,
+    `Rubro: ${rubro || '—'}`,
+    `Inversión en publicidad: ${budget || '—'}`,
+    `Fuente: ${source || '/'}`,
+    `Dispositivo: ${deviceLabel || '—'}`,
+    utm_campaign || utm_source
+      ? `UTM: ${[utm_campaign, utm_source, utm_medium, utm_content].filter(Boolean).join(' · ')}`
+      : '',
+    `Hora: ${now}`,
+  ].filter(Boolean).join('\n')
+  const html = `
       <!DOCTYPE html>
       <html lang="es">
       <head><meta charset="UTF-8"></head>
@@ -103,8 +107,47 @@ export async function POST(req: Request) {
         </div>
       </body>
       </html>
-    `,
+      `
+
+  await insertLead({
+    name,
+    email,
+    phone,
+    rubro,
+    budget,
+    source,
+    userAgent: requestUserAgent,
+    device: deviceLabel,
+    utm_source,
+    utm_medium,
+    utm_campaign,
+    utm_content,
+    channel: 'lead_form',
   })
+
+  try {
+    await supabase.from('events').insert({
+      type: 'form_submit',
+      source: source || null,
+      user_agent: req.headers.get('user-agent') || null,
+    })
+  } catch (_) {}
+
+  try {
+    await resend.emails.send({
+      from: 'ClickBase <notificaciones@priceguard.cl>',
+      to: 'vicente.torres@proppi.cl',
+      subject,
+      html,
+    })
+  } catch (error) {
+    console.error('Lead email error (non-fatal):', error)
+    try {
+      await sendMailViaAppsScript({ subject, body, html })
+    } catch (appsScriptError) {
+      console.error('Apps Script lead email error (non-fatal):', appsScriptError)
+    }
+  }
 
   return NextResponse.json({ ok: true })
 }

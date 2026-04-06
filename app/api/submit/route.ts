@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
+import { insertLead } from '@/lib/leads'
+import { sendMailViaAppsScript } from '@/lib/apps-script-mail'
 
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyh4a4T6fnfA8u0C6oyI7oBT37NSsJI6wuiyQN8tHB4hN2hnwGYlXRzCwJxFfoxDe6a/exec'
 
@@ -100,6 +102,18 @@ function buildEmailHtml(data: Record<string, string>) {
 export async function POST(request: NextRequest) {
   try {
     const data = await request.json()
+    const requestUserAgent = request.headers.get('user-agent') || null
+    const subject = `🎯 Nuevo lead: ${data.nombre}${data.empresa ? ` · ${data.empresa}` : ''} (${data.rubro})`
+    const html = buildEmailHtml(data)
+    const body = [
+      `Nombre: ${data.nombre}`,
+      `Empresa: ${data.empresa || '—'}`,
+      `Rubro: ${data.rubro || '—'}`,
+      `Email: ${data.email || '—'}`,
+      `WhatsApp: ${data.whatsapp || '—'}`,
+      data.mensaje ? `Mensaje: ${data.mensaje}` : '',
+      `Fuente: ${data.source || '/'}`,
+    ].filter(Boolean).join('\n')
 
     // Validación básica
     if (!data.nombre || !data.email || !data.whatsapp || !data.rubro) {
@@ -108,6 +122,23 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       )
     }
+
+    await insertLead({
+      name: data.nombre,
+      email: data.email,
+      phone: data.whatsapp,
+      company: data.empresa,
+      rubro: data.rubro,
+      message: data.mensaje,
+      source: data.source || '/',
+      referrer: data.referrer || null,
+      userAgent: requestUserAgent,
+      utm_source: data.utm_source,
+      utm_medium: data.utm_medium,
+      utm_campaign: data.utm_campaign,
+      utm_content: data.utm_content,
+      channel: 'cotizacion_form',
+    })
 
     // 1. Guardar en Google Sheets
     const sheetRes = await fetch(SCRIPT_URL, {
@@ -128,7 +159,7 @@ export async function POST(request: NextRequest) {
 
     // 2. Enviar email de notificación (no bloquea si falla)
     try {
-      await fetch('https://api.resend.com/emails', {
+      const resendResponse = await fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${RESEND_API_KEY}`,
@@ -137,20 +168,28 @@ export async function POST(request: NextRequest) {
         body: JSON.stringify({
           from:    FROM_EMAIL,
           to:      [NOTIFY_EMAIL],
-          subject: `🎯 Nuevo lead: ${data.nombre}${data.empresa ? ` · ${data.empresa}` : ''} (${data.rubro})`,
-          html:    buildEmailHtml(data),
+          subject,
+          html,
         }),
       })
+
+      if (!resendResponse.ok) {
+        throw new Error(`Resend error: ${resendResponse.status}`)
+      }
     } catch (emailErr) {
-      // El email falló pero el lead ya quedó en Sheets — no romper el flujo
       console.error('Email error (non-fatal):', emailErr)
+      try {
+        await sendMailViaAppsScript({ subject, body, html })
+      } catch (appsScriptError) {
+        console.error('Apps Script lead email error (non-fatal):', appsScriptError)
+      }
     }
 
     void supabase.from('events').insert({
       type: 'form_submit',
       source: data.source || '/',
       referrer: data.referrer || null,
-      user_agent: request.headers.get('user-agent') || null,
+      user_agent: requestUserAgent,
     })
 
     return NextResponse.json({ success: true })

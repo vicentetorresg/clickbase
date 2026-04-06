@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server'
-
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbySihM8c3LDUQkWdIWmKul3I0a0a2eSYpEldKBC-VmS-7oip3_5Bv5qEKo8ds-qPGWMcw/exec'
+import { sendMailViaAppsScript } from '@/lib/apps-script-mail'
 
 function getDeviceLabel(input?: string | null) {
   if (!input) return 'Desconocido'
@@ -112,11 +111,7 @@ export async function POST(req: Request) {
     </html>
   `
 
-  await fetch(APPS_SCRIPT_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ subject, body, html }),
-  }).catch(() => {})
+  await sendMailViaAppsScript({ subject, body, html }).catch(() => {})
 
   return NextResponse.json({ ok: true })
 }
