@@ -1,8 +1,11 @@
 import { NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
 import { insertLead } from '@/lib/leads'
+import { Resend } from 'resend'
 
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwDRPoh1CDQqNNHxWCNBKFezhcxMn2MoDNYPUpVTX06coOkdD-hy4ZbOlzC931z3vIV4g/exec'
+const resend = new Resend(process.env.RESEND_API_KEY)
+const FROM_EMAIL = 'ClickBase <notificaciones@priceguard.cl>'
+const NOTIFY_EMAIL = 'vicente.torres@proppi.cl'
 
 function getDeviceLabel(input?: string | null) {
   if (!input) return null
@@ -44,12 +47,21 @@ export async function POST(req: Request) {
     user_agent: req.headers.get('user-agent') || null,
   })
 
-  fetch(APPS_SCRIPT_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name, phone, source, device: deviceLabel, utm_source, utm_medium, utm_campaign, utm_content }),
-  }).catch((error) => {
-    console.error('Apps Script email error (non-fatal):', error)
+  await resend.emails.send({
+    from: FROM_EMAIL,
+    to: NOTIFY_EMAIL,
+    subject: `Nuevo lead ClickBase — ${name || 'Sin nombre'}`,
+    html: `
+      <p><strong>Nombre:</strong> ${name || '-'}</p>
+      <p><strong>Teléfono:</strong> ${phone || '-'}</p>
+      <p><strong>Rubro:</strong> ${rubro || '-'}</p>
+      <p><strong>Presupuesto:</strong> ${budget || '-'}</p>
+      <p><strong>Fuente:</strong> ${source || '-'}</p>
+      <p><strong>Dispositivo:</strong> ${deviceLabel || '-'}</p>
+      ${utm_source ? `<p><strong>UTM:</strong> ${utm_source} / ${utm_medium || '-'} / ${utm_campaign || '-'}</p>` : ''}
+    `,
+  }).catch((err: unknown) => {
+    console.error('Resend email error (non-fatal):', err)
   })
 
   return NextResponse.json({ ok: true })
