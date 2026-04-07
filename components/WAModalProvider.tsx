@@ -86,72 +86,66 @@ function LeadModal({ title, onClose, onAbandon }: { title: string; onClose: () =
             <p className="text-slate-500 text-xs mt-2">Revisa tu WhatsApp en los próximos minutos.</p>
           </div>
         ) : (
-          <div className="pt-3">
-            <div className="flex items-center justify-center gap-2 mb-3">
-              <span className="text-lg">⚡</span>
-              <span className="text-xs font-bold text-[#A855F7] uppercase tracking-widest">¿Qué es ClickBase?</span>
-            </div>
+          <div className="pt-2">
             <h3 className="text-white font-bold text-xl mb-1 text-center leading-snug">
-              ¿Necesitas tener más clientes<br />
+              ¿Tienes un buen negocio pero<br />
               <span style={{ background: 'linear-gradient(135deg,#7C3AED,#06B6D4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-                para tu negocio?
+                te faltan clientes?
               </span>
             </h3>
-            <p className="text-slate-400 text-sm mb-4 text-center">
-              Hacemos todo por ti: diseñamos tu web, lanzamos tus anuncios y configuramos el tracking para que cada peso invertido en publicidad se traduzca en clientes reales.
+            <p className="text-slate-400 text-sm text-center mb-4">
+              Muchos negocios gastan en publicidad y no ven resultados.<br />
+              Nosotros lo hacemos por ti — y te traemos clientes reales.
             </p>
-            <ul className="flex flex-col gap-2.5 mb-4 bg-[#0e0e28] rounded-xl p-3">
-              {[
-                { icon: '🌐', label: 'Landing de alta conversión', desc: 'Diseñada para convertir visitas en contactos' },
-                { icon: '📣', label: 'Campaña en Google Ads o Meta Ads', desc: 'Configurada y lista para atraer clientes' },
-                { icon: '📊', label: 'Pixel + GTM + tracking completo', desc: 'Saber qué funciona y optimizar en tiempo real' },
-              ].map(item => (
-                <li key={item.label} className="flex items-start gap-2.5 text-sm text-slate-300">
-                  <span className="text-base leading-none mt-0.5">{item.icon}</span>
-                  <span>
-                    <span className="font-semibold text-white">{item.label}.</span>{' '}
-                    <span className="text-slate-400">{item.desc}.</span>
-                  </span>
-                </li>
-              ))}
-            </ul>
-            <div className="border-t border-[rgba(124,58,237,0.2)] pt-4">
-              <p className="text-center text-white font-bold text-base mb-1">Déjanos tus datos</p>
-              <p className="text-center text-slate-400 text-xs mb-3">Te contactamos hoy por WhatsApp — sin compromiso.</p>
-              <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-                <input
-                  required
-                  value={name}
-                  onChange={e => setName(e.target.value)}
-                  name="name"
-                  placeholder="Tu nombre"
-                  autoComplete="name"
-                  className="bg-[#1a1a3a] border border-slate-700 rounded-xl px-4 py-3 text-white text-sm placeholder-slate-500 focus:outline-none focus:border-[rgba(124,58,237,0.6)]"
-                  style={{ fontSize: '16px' }}
-                />
-                <input
-                  required
-                  value={phone}
-                  onChange={e => setPhone(e.target.value)}
-                  name="tel"
-                  placeholder="Ej: +56 9 1234 5678"
-                  type="tel"
-                  autoComplete="tel"
-                  className="bg-[#1a1a3a] border border-slate-700 rounded-xl px-4 py-3 text-white text-sm placeholder-slate-500 focus:outline-none focus:border-[rgba(124,58,237,0.6)]"
-                  style={{ fontSize: '16px' }}
-                />
-                {error && <p className="text-red-400 text-xs -mt-1">{error}</p>}
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="btn-cta w-full inline-flex items-center justify-center gap-2 font-bold py-3.5 rounded-xl text-white transition-all duration-200 disabled:opacity-60 mt-1"
-                  style={{ background: 'linear-gradient(135deg, #1DA851, #25D366)', boxShadow: '0 0 24px rgba(37,211,102,0.4)' }}
-                >
-                  {loading ? <><Spinner /> Enviando...</> : <><span>Quiero más clientes</span> <WAIcon /></>}
-                </button>
-                <p className="text-center text-slate-600 text-xs -mt-1">🔒 Sin compromisos · Respuesta hoy</p>
-              </form>
+            <div className="flex justify-around mb-5 bg-[#0e0e28] rounded-xl py-3 px-2">
+              <div className="flex flex-col items-center gap-1 text-center">
+                <span className="text-2xl">🌐</span>
+                <span className="text-white text-xs font-semibold">Tu web lista</span>
+              </div>
+              <div className="w-px bg-slate-700" />
+              <div className="flex flex-col items-center gap-1 text-center">
+                <span className="text-2xl">📣</span>
+                <span className="text-white text-xs font-semibold">Anuncios corriendo</span>
+              </div>
+              <div className="w-px bg-slate-700" />
+              <div className="flex flex-col items-center gap-1 text-center">
+                <span className="text-2xl">📊</span>
+                <span className="text-white text-xs font-semibold">Clientes reales</span>
+              </div>
             </div>
+            <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+              <input
+                required
+                value={name}
+                onChange={e => setName(e.target.value)}
+                name="name"
+                placeholder="Tu nombre"
+                autoComplete="name"
+                className="bg-[#1a1a3a] border-2 border-[rgba(124,58,237,0.4)] rounded-xl px-4 py-3.5 text-white text-base placeholder-slate-500 focus:outline-none focus:border-[#7C3AED]"
+                style={{ fontSize: '16px' }}
+              />
+              <input
+                required
+                value={phone}
+                onChange={e => setPhone(e.target.value)}
+                name="tel"
+                placeholder="Tu WhatsApp (+56 9 ...)"
+                type="tel"
+                autoComplete="tel"
+                className="bg-[#1a1a3a] border-2 border-[rgba(124,58,237,0.4)] rounded-xl px-4 py-3.5 text-white text-base placeholder-slate-500 focus:outline-none focus:border-[#7C3AED]"
+                style={{ fontSize: '16px' }}
+              />
+              {error && <p className="text-red-400 text-xs -mt-1">{error}</p>}
+              <button
+                type="submit"
+                disabled={loading}
+                className="btn-cta w-full inline-flex items-center justify-center gap-2 font-bold py-4 rounded-xl text-white text-base transition-all duration-200 disabled:opacity-60"
+                style={{ background: 'linear-gradient(135deg, #1DA851, #25D366)', boxShadow: '0 0 28px rgba(37,211,102,0.5)' }}
+              >
+                {loading ? <><Spinner /> Enviando...</> : <><span>Quiero más clientes</span> <WAIcon /></>}
+              </button>
+              <p className="text-center text-slate-500 text-xs">🔒 Sin compromisos · Respuesta hoy</p>
+            </form>
           </div>
         )}
       </div>
